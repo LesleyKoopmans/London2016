@@ -14,6 +14,10 @@
 		67232BAD1C973B2C0006540A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 67232BAC1C973B2C0006540A /* Assets.xcassets */; };
 		67232BB01C973B2C0006540A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67232BAE1C973B2C0006540A /* LaunchScreen.storyboard */; };
 		67232BBB1C9742130006540A /* UIViewStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67232BBA1C9742130006540A /* UIViewStyling.swift */; };
+		67232BBF1C98AB120006540A /* ToDoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67232BBE1C98AB120006540A /* ToDoVC.swift */; };
+		67232BC31C98AF950006540A /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67232BC21C98AF950006540A /* Activity.swift */; };
+		67232BC71C98B4650006540A /* ActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67232BC61C98B4650006540A /* ActivityCell.swift */; };
+		67232BC91C98C4B80006540A /* ToDoDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67232BC81C98C4B80006540A /* ToDoDetailVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +30,10 @@
 		67232BAF1C973B2C0006540A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		67232BB11C973B2C0006540A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		67232BBA1C9742130006540A /* UIViewStyling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIViewStyling.swift; sourceTree = "<group>"; };
+		67232BBE1C98AB120006540A /* ToDoVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoVC.swift; sourceTree = "<group>"; };
+		67232BC21C98AF950006540A /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
+		67232BC61C98B4650006540A /* ActivityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityCell.swift; sourceTree = "<group>"; };
+		67232BC81C98C4B80006540A /* ToDoDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoDetailVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +83,8 @@
 			isa = PBXGroup;
 			children = (
 				67232BA41C973B2B0006540A /* MainVC.swift */,
+				67232BBE1C98AB120006540A /* ToDoVC.swift */,
+				67232BC81C98C4B80006540A /* ToDoDetailVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -90,6 +100,8 @@
 		67232BB91C9741180006540A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				67232BC21C98AF950006540A /* Activity.swift */,
+				67232BC61C98B4650006540A /* ActivityCell.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -167,9 +179,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				67232BA51C973B2B0006540A /* MainVC.swift in Sources */,
+				67232BC31C98AF950006540A /* Activity.swift in Sources */,
 				67232BBB1C9742130006540A /* UIViewStyling.swift in Sources */,
 				67232BA31C973B2B0006540A /* AppDelegate.swift in Sources */,
+				67232BC71C98B4650006540A /* ActivityCell.swift in Sources */,
+				67232BBF1C98AB120006540A /* ToDoVC.swift in Sources */,
 				67232BAB1C973B2C0006540A /* London2016.xcdatamodeld in Sources */,
+				67232BC91C98C4B80006540A /* ToDoDetailVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -319,6 +335,7 @@
 				67232BB61C973B2C0006540A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

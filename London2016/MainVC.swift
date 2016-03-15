@@ -15,5 +15,13 @@ class MainVC: UIViewController {
         
     }
     
+    @IBAction func toDoBtnTapped() {
+        performSegueWithIdentifier("ToDoVC", sender: nil)
+    }
+    
+    @IBAction func haveDoneBtnTapped() {
+        performSegueWithIdentifier("HaveDoneVC", sender: nil)
+    }
+    
 }
 
