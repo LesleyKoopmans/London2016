@@ -18,9 +18,12 @@
 		67232BC31C98AF950006540A /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67232BC21C98AF950006540A /* Activity.swift */; };
 		67232BC71C98B4650006540A /* ActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67232BC61C98B4650006540A /* ActivityCell.swift */; };
 		67232BC91C98C4B80006540A /* ToDoDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67232BC81C98C4B80006540A /* ToDoDetailVC.swift */; };
+		67232BCC1C99A5790006540A /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67232BCB1C99A5790006540A /* DataService.swift */; };
+		D9A395A9DC8B9E8127091628 /* Pods_London2016.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24B77B716B1E06EA0CCD813 /* Pods_London2016.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		34E8ED9DE84D97CB107CA104 /* Pods-London2016.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-London2016.release.xcconfig"; path = "Pods/Target Support Files/Pods-London2016/Pods-London2016.release.xcconfig"; sourceTree = "<group>"; };
 		67232B9F1C973B2B0006540A /* London2016.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = London2016.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		67232BA21C973B2B0006540A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		67232BA41C973B2B0006540A /* MainVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainVC.swift; sourceTree = "<group>"; };
@@ -34,6 +37,9 @@
 		67232BC21C98AF950006540A /* Activity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		67232BC61C98B4650006540A /* ActivityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActivityCell.swift; sourceTree = "<group>"; };
 		67232BC81C98C4B80006540A /* ToDoDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoDetailVC.swift; sourceTree = "<group>"; };
+		67232BCB1C99A5790006540A /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
+		92E417D97619AC9DADD7AC26 /* Pods-London2016.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-London2016.debug.xcconfig"; path = "Pods/Target Support Files/Pods-London2016/Pods-London2016.debug.xcconfig"; sourceTree = "<group>"; };
+		D24B77B716B1E06EA0CCD813 /* Pods_London2016.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_London2016.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -41,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D9A395A9DC8B9E8127091628 /* Pods_London2016.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -52,6 +59,8 @@
 			children = (
 				67232BA11C973B2B0006540A /* London2016 */,
 				67232BA01C973B2B0006540A /* Products */,
+				680E95D40D813BC1001D6607 /* Pods */,
+				FEFDADF99756927F50CBBFFF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -66,6 +75,7 @@
 		67232BA11C973B2B0006540A /* London2016 */ = {
 			isa = PBXGroup;
 			children = (
+				67232BCA1C99A55D0006540A /* Services */,
 				67232BB91C9741180006540A /* Model */,
 				67232BB81C9741130006540A /* View */,
 				67232BB71C97410F0006540A /* Controller */,
@@ -106,6 +116,31 @@
 			name = Model;
 			sourceTree = "<group>";
 		};
+		67232BCA1C99A55D0006540A /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				67232BCB1C99A5790006540A /* DataService.swift */,
+			);
+			name = Services;
+			sourceTree = "<group>";
+		};
+		680E95D40D813BC1001D6607 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				92E417D97619AC9DADD7AC26 /* Pods-London2016.debug.xcconfig */,
+				34E8ED9DE84D97CB107CA104 /* Pods-London2016.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		FEFDADF99756927F50CBBFFF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D24B77B716B1E06EA0CCD813 /* Pods_London2016.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -113,9 +148,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 67232BB41C973B2C0006540A /* Build configuration list for PBXNativeTarget "London2016" */;
 			buildPhases = (
+				0735B6C4B4FFA4E2893763D4 /* Check Pods Manifest.lock */,
 				67232B9B1C973B2B0006540A /* Sources */,
 				67232B9C1C973B2B0006540A /* Frameworks */,
 				67232B9D1C973B2B0006540A /* Resources */,
+				F84697DBF37E01CB97BF13DD /* Embed Pods Frameworks */,
+				05137FB57BBFD2D8E7919C78 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -173,11 +211,60 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		05137FB57BBFD2D8E7919C78 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-London2016/Pods-London2016-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		0735B6C4B4FFA4E2893763D4 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		F84697DBF37E01CB97BF13DD /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-London2016/Pods-London2016-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		67232B9B1C973B2B0006540A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67232BCC1C99A5790006540A /* DataService.swift in Sources */,
 				67232BA51C973B2B0006540A /* MainVC.swift in Sources */,
 				67232BC31C98AF950006540A /* Activity.swift in Sources */,
 				67232BBB1C9742130006540A /* UIViewStyling.swift in Sources */,
@@ -296,6 +383,7 @@
 		};
 		67232BB51C973B2C0006540A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 92E417D97619AC9DADD7AC26 /* Pods-London2016.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = London2016/Info.plist;
@@ -307,6 +395,7 @@
 		};
 		67232BB61C973B2C0006540A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 34E8ED9DE84D97CB107CA104 /* Pods-London2016.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = London2016/Info.plist;

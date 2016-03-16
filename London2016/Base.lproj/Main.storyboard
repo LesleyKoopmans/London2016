@@ -128,6 +128,11 @@
                                             <constraint firstItem="cgh-7z-WO2" firstAttribute="top" secondItem="oyX-pU-IrY" secondAttribute="bottom" id="kvT-n9-Yly"/>
                                             <constraint firstItem="oyX-pU-IrY" firstAttribute="top" secondItem="DRY-BI-u52" secondAttribute="top" id="qT6-7J-iYM"/>
                                         </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outlet property="nameLbl" destination="cgh-7z-WO2" id="wy6-fs-gFM"/>
                                             <outlet property="thumbImg" destination="oyX-pU-IrY" id="H5P-rk-T6T"/>
@@ -486,6 +491,6 @@
         <image name="Icon" width="57" height="57"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Bv2-Wb-Vin"/>
+        <segue reference="9K5-UX-8Or"/>
     </inferredMetricsTieBreakers>
 </document>

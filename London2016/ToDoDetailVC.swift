@@ -21,8 +21,8 @@ class ToDoDetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        titleLbl.text = activity.name
-        descriptionLbl.text = activity.description
+        titleLbl.text = activity.activityName
+        descriptionLbl.text = activity.activityDescription
         
     }
     
