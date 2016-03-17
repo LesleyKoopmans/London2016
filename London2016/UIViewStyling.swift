@@ -24,6 +24,21 @@ extension UIView {
     
     public override func awakeFromNib() {
         self.layer.cornerRadius = cornerRadius
+        
+        if materialKey {
+            self.layer.shadowOpacity = 0.8
+            self.layer.shadowRadius = 3.0
+            self.layer.shadowOffset = CGSizeMake(2.0, 2.0)
+            self.layer.shadowColor = UIColor(red: 157.0/255.0, green: 157.0/255.0, blue: 157.0/255.0, alpha: 1.0).CGColor
+            self.layer.masksToBounds = false
+        } else {
+            self.layer.shadowOpacity = 0
+            self.layer.shadowRadius = 0
+            self.layer.shadowColor = nil
+            self.layer.shadowOffset = CGSizeMake(0.0, 0.0)
+            self.layer.masksToBounds = true
+        }
+        
     }
     
     @IBInspectable var materialDesign: Bool {
@@ -36,15 +51,32 @@ extension UIView {
             if materialKey {
                 self.layer.shadowOpacity = 0.8
                 self.layer.shadowRadius = 3.0
-                self.layer.shadowOffset = CGSizeMake(4.0, 4.0)
+                self.layer.shadowOffset = CGSizeMake(10.0, 10.0)
                 self.layer.shadowColor = UIColor(red: 157.0/255.0, green: 157.0/255.0, blue: 157.0/255.0, alpha: 1.0).CGColor
                 self.layer.masksToBounds = false
             } else {
                 self.layer.shadowOpacity = 0
                 self.layer.shadowRadius = 0
                 self.layer.shadowColor = nil
+                self.layer.shadowOffset = CGSizeMake(0.0, 0.0)
+                self.layer.masksToBounds = true
             }
         }
     }
     
+}
+
+extension UINavigationBar {
+    var castShadow: String {
+        get {
+            return "anything fake"
+        }
+        set {
+            self.layer.shadowOffset = CGSizeMake(0.0, 5.0)
+            self.layer.shadowRadius = 3.0
+            self.layer.shadowColor = UIColor(red: 157.0/255.0, green: 157.0/255.0, blue: 157.0/255.0, alpha: 1.0).CGColor
+            self.layer.shadowOpacity = 0.8
+            self.layer.masksToBounds = false
+        }
+    }
 }

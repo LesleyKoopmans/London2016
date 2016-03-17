@@ -12,7 +12,7 @@ class MainVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.navigationItem.title = "LONDON2016"
     }
     
     @IBAction func toDoBtnTapped() {

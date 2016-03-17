@@ -20,6 +20,7 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         super.viewDidLoad()
         collection.delegate = self
         collection.dataSource = self
+        self.navigationItem.title = "TO DO"
         
         DataService.ds.REF_ACTIVITY.observeEventType(.Value, withBlock: { snapshot in
             self.activities = []
@@ -50,13 +51,15 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         
         if let cell = collectionView.dequeueReusableCellWithReuseIdentifier("ActivityCell", forIndexPath: indexPath) as? ActivityCell {
             
+            cell.request?.cancel()
+            
             var img: UIImage?
             
             if let url = activity.activityImage {
                 img = ToDoVC.imageCache.objectForKey(url) as? UIImage
             }
             
-            cell.configureCell(activity, img: img!)
+            cell.configureCell(activity, img: img)
             return cell
             
         } else {

@@ -29,6 +29,7 @@ class ActivityCell: UICollectionViewCell {
                 if error == nil {
                     let img = UIImage(data: data!)!
                     self.thumbImg.image = img
+                    self.thumbImg.clipsToBounds = true
                     ToDoVC.imageCache.setObject(img, forKey: self.activity.activityImage!)
                 }
             })

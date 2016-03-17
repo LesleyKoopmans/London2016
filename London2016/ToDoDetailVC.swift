@@ -20,6 +20,7 @@ class ToDoDetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.title = "\(activity.activityName)".capitalizedString
         
         titleLbl.text = activity.activityName
         descriptionLbl.text = activity.activityDescription
