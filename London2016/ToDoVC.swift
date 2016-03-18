@@ -83,4 +83,9 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         return CGSizeMake(120, 120)
     }
     
+    @IBAction func addBtnTapped(sender: AnyObject) {
+        performSegueWithIdentifier("ToDoCreateVC", sender: nil)
+    }
+    
+    
 }

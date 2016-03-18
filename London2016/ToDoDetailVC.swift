@@ -32,6 +32,6 @@ class ToDoDetailVC: UIViewController {
     }
     
     @IBAction func editBtnTapped(sender: UIButton) {
-        performSegueWithIdentifier("ToDoEdit", sender: nil)
+        performSegueWithIdentifier("ToDoEditVC", sender: nil)
     }
 }
