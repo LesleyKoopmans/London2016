@@ -9,6 +9,7 @@
 import UIKit
 
 private var materialKey = false
+private var ImaterialKey = false
 
 extension UIView {
     

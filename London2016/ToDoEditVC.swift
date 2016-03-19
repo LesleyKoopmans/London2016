@@ -8,10 +8,10 @@
 
 import UIKit
 
-class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate {
+class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
     
     @IBOutlet weak var titleField: UITextField!
-    @IBOutlet weak var descriptionField: UITextField!
+    @IBOutlet weak var descriptionField: UITextView!
     @IBOutlet weak var datePicker: UITextField!
     @IBOutlet weak var priceField: UITextField!
     @IBOutlet weak var urlField: UITextField!
@@ -22,11 +22,17 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        descriptionField.delegate = self
+        descriptionField.text = "Description"
+        descriptionField.textColor = UIColor.lightGrayColor()
+        descriptionField.font = UIFont(name: "Verdana", size: 14.0)
+        descriptionField.textAlignment = .Center
+        descriptionField.editable = true
+        
         imageView.clipsToBounds = true
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         titleField.delegate = self
-        descriptionField.delegate = self
         priceField.delegate = self
         urlField.delegate = self
     }
@@ -59,6 +65,20 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         imagePicker.sourceType = .PhotoLibrary
         let img = info[UIImagePickerControllerOriginalImage] as? UIImage
         imageView.image = img
+    }
+    
+    func textViewDidBeginEditing(textView: UITextView) {
+        if descriptionField.textColor == UIColor.lightGrayColor() {
+            descriptionField.text = nil
+            descriptionField.textColor = UIColor.blackColor()
+        }
+    }
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        if descriptionField.text.isEmpty {
+            descriptionField.text = "Description"
+            descriptionField.textColor = UIColor.lightGrayColor()
+        }
     }
     
     @IBAction func selectImage(sender: UITapGestureRecognizer) {

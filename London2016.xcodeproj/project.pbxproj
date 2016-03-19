@@ -20,6 +20,7 @@
 		67232BC91C98C4B80006540A /* ToDoDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67232BC81C98C4B80006540A /* ToDoDetailVC.swift */; };
 		67232BCC1C99A5790006540A /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67232BCB1C99A5790006540A /* DataService.swift */; };
 		67232BCE1C9C4BBB0006540A /* ToDoEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67232BCD1C9C4BBB0006540A /* ToDoEditVC.swift */; };
+		67232BD01C9D72720006540A /* CustomTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67232BCF1C9D72720006540A /* CustomTextView.swift */; };
 		D9A395A9DC8B9E8127091628 /* Pods_London2016.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24B77B716B1E06EA0CCD813 /* Pods_London2016.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +41,7 @@
 		67232BC81C98C4B80006540A /* ToDoDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoDetailVC.swift; sourceTree = "<group>"; };
 		67232BCB1C99A5790006540A /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		67232BCD1C9C4BBB0006540A /* ToDoEditVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoEditVC.swift; sourceTree = "<group>"; };
+		67232BCF1C9D72720006540A /* CustomTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTextView.swift; sourceTree = "<group>"; };
 		92E417D97619AC9DADD7AC26 /* Pods-London2016.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-London2016.debug.xcconfig"; path = "Pods/Target Support Files/Pods-London2016/Pods-London2016.debug.xcconfig"; sourceTree = "<group>"; };
 		D24B77B716B1E06EA0CCD813 /* Pods_London2016.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_London2016.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -106,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				67232BBA1C9742130006540A /* UIViewStyling.swift */,
+				67232BCF1C9D72720006540A /* CustomTextView.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -272,6 +275,7 @@
 				67232BA51C973B2B0006540A /* MainVC.swift in Sources */,
 				67232BC31C98AF950006540A /* Activity.swift in Sources */,
 				67232BBB1C9742130006540A /* UIViewStyling.swift in Sources */,
+				67232BD01C9D72720006540A /* CustomTextView.swift in Sources */,
 				67232BA31C973B2B0006540A /* AppDelegate.swift in Sources */,
 				67232BC71C98B4650006540A /* ActivityCell.swift in Sources */,
 				67232BBF1C98AB120006540A /* ToDoVC.swift in Sources */,

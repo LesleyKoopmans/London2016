@@ -377,21 +377,21 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Descripton" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WbF-Tu-hBV">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="els-k7-N75" customClass="CustomTextView" customModule="London2016" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="50" width="288" height="70"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="70" id="0GC-VK-uJX"/>
+                                            <constraint firstAttribute="height" constant="70" id="zcu-UK-fig"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="materialDesign" value="YES"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                 <real key="value" value="5"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
-                                    </textField>
+                                    </textView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="k2m-Wh-pu4">
                                         <rect key="frame" x="0.0" y="135" width="288" height="35"/>
                                         <subviews>
@@ -431,7 +431,7 @@
                                             <constraint firstAttribute="height" constant="35" id="jUs-kL-LdI"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="URL" returnKeyType="done"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="boolean" keyPath="materialDesign" value="YES"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -442,6 +442,16 @@
                                     <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon" translatesAutoresizingMaskIntoConstraints="NO" id="QDX-rV-WGW">
                                         <rect key="frame" x="0.0" y="235" width="288" height="179"/>
                                         <gestureRecognizers/>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="IcornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="ImaterialDesign" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="materialDesign" value="YES"/>
+                                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                <real key="value" value="5"/>
+                                            </userDefinedRuntimeAttribute>
+                                        </userDefinedRuntimeAttributes>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="KDj-X7-pGy" appends="YES" id="ZwK-N8-Vyf"/>
                                         </connections>
@@ -471,16 +481,15 @@
                                     <constraint firstAttribute="trailing" secondItem="hGc-AI-G8h" secondAttribute="trailing" id="1E0-Sa-oiP"/>
                                     <constraint firstAttribute="bottom" secondItem="hGc-AI-G8h" secondAttribute="bottom" id="30a-Pr-sf1"/>
                                     <constraint firstItem="gsj-Sf-Fso" firstAttribute="leading" secondItem="9WM-03-dfU" secondAttribute="leading" id="5Iu-4y-aqK"/>
+                                    <constraint firstItem="els-k7-N75" firstAttribute="trailing" secondItem="gsj-Sf-Fso" secondAttribute="trailing" id="7At-0R-EpA"/>
                                     <constraint firstItem="QOs-wL-719" firstAttribute="leading" secondItem="9WM-03-dfU" secondAttribute="leading" id="CTY-7w-LwP"/>
                                     <constraint firstAttribute="trailing" secondItem="gsj-Sf-Fso" secondAttribute="trailing" id="DXt-4M-JoH"/>
                                     <constraint firstItem="QDX-rV-WGW" firstAttribute="leading" secondItem="9WM-03-dfU" secondAttribute="leading" id="DfD-xK-Bkq"/>
                                     <constraint firstAttribute="trailing" secondItem="QDX-rV-WGW" secondAttribute="trailing" id="MJt-df-Pp1"/>
                                     <constraint firstAttribute="bottom" secondItem="k2m-Wh-pu4" secondAttribute="bottom" constant="294" id="MvQ-Pn-X9m"/>
-                                    <constraint firstItem="WbF-Tu-hBV" firstAttribute="leading" secondItem="9WM-03-dfU" secondAttribute="leading" id="S8V-M6-4MX"/>
                                     <constraint firstItem="hGc-AI-G8h" firstAttribute="top" secondItem="QDX-rV-WGW" secondAttribute="bottom" constant="15" id="aGJ-6p-Ybh"/>
                                     <constraint firstItem="hGc-AI-G8h" firstAttribute="leading" secondItem="9WM-03-dfU" secondAttribute="leading" id="iUa-O0-9Ki"/>
                                     <constraint firstItem="k2m-Wh-pu4" firstAttribute="trailing" secondItem="QOs-wL-719" secondAttribute="trailing" id="kud-y1-6hI"/>
-                                    <constraint firstAttribute="trailing" secondItem="WbF-Tu-hBV" secondAttribute="trailing" id="oiN-dd-Bz6"/>
                                     <constraint firstItem="gsj-Sf-Fso" firstAttribute="top" secondItem="9WM-03-dfU" secondAttribute="top" id="sxW-lx-Zu3"/>
                                     <constraint firstItem="QDX-rV-WGW" firstAttribute="top" secondItem="QOs-wL-719" secondAttribute="bottom" constant="15" id="vBX-OF-VHZ"/>
                                 </constraints>
@@ -505,7 +514,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="datePicker" destination="WAJ-m9-pae" id="xMj-K6-2Rd"/>
-                        <outlet property="descriptionField" destination="WbF-Tu-hBV" id="Umj-w8-C58"/>
+                        <outlet property="descriptionField" destination="els-k7-N75" id="Hh1-ao-JfN"/>
                         <outlet property="imageView" destination="QDX-rV-WGW" id="iFb-o3-Ycs"/>
                         <outlet property="priceField" destination="21K-GK-RuH" id="fbn-UZ-g8Y"/>
                         <outlet property="titleField" destination="gsj-Sf-Fso" id="M5D-Lj-L43"/>
