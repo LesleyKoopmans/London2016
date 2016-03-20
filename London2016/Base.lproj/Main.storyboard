@@ -122,7 +122,7 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon" translatesAutoresizingMaskIntoConstraints="NO" id="uuO-D1-yjK">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="uuO-D1-yjK">
                                                     <rect key="frame" x="0.0" y="0.0" width="120" height="95"/>
                                                 </imageView>
                                             </subviews>
@@ -190,7 +190,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon" translatesAutoresizingMaskIntoConstraints="NO" id="lxP-E3-Uyn">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="lxP-E3-Uyn">
                                 <rect key="frame" x="0.0" y="64" width="320" height="190"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="190" id="D3M-yj-fjd"/>
@@ -439,23 +439,41 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon" translatesAutoresizingMaskIntoConstraints="NO" id="QDX-rV-WGW">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ecj-Z3-s1b">
                                         <rect key="frame" x="0.0" y="235" width="288" height="179"/>
-                                        <gestureRecognizers/>
+                                        <subviews>
+                                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="QDX-rV-WGW">
+                                                <rect key="frame" x="0.0" y="0.0" width="288" height="179"/>
+                                                <gestureRecognizers/>
+                                                <userDefinedRuntimeAttributes>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="IcornerRadius">
+                                                        <real key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="ImaterialDesign" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="boolean" keyPath="materialDesign" value="YES"/>
+                                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                                        <real key="value" value="5"/>
+                                                    </userDefinedRuntimeAttribute>
+                                                </userDefinedRuntimeAttributes>
+                                                <connections>
+                                                    <outletCollection property="gestureRecognizers" destination="KDj-X7-pGy" appends="YES" id="ZwK-N8-Vyf"/>
+                                                </connections>
+                                            </imageView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="QDX-rV-WGW" secondAttribute="trailing" id="Pfz-BL-VEf"/>
+                                            <constraint firstItem="QDX-rV-WGW" firstAttribute="top" secondItem="ecj-Z3-s1b" secondAttribute="top" id="WVY-n8-UIS"/>
+                                            <constraint firstAttribute="bottom" secondItem="QDX-rV-WGW" secondAttribute="bottom" id="XU5-Ma-Tcv"/>
+                                            <constraint firstItem="QDX-rV-WGW" firstAttribute="leading" secondItem="ecj-Z3-s1b" secondAttribute="leading" id="mDA-1P-LhV"/>
+                                        </constraints>
                                         <userDefinedRuntimeAttributes>
-                                            <userDefinedRuntimeAttribute type="number" keyPath="IcornerRadius">
-                                                <real key="value" value="5"/>
-                                            </userDefinedRuntimeAttribute>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="ImaterialDesign" value="YES"/>
-                                            <userDefinedRuntimeAttribute type="boolean" keyPath="materialDesign" value="YES"/>
                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                 <real key="value" value="5"/>
                                             </userDefinedRuntimeAttribute>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="materialDesign" value="YES"/>
                                         </userDefinedRuntimeAttributes>
-                                        <connections>
-                                            <outletCollection property="gestureRecognizers" destination="KDj-X7-pGy" appends="YES" id="ZwK-N8-Vyf"/>
-                                        </connections>
-                                    </imageView>
+                                    </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hGc-AI-G8h">
                                         <rect key="frame" x="0.0" y="429" width="288" height="35"/>
                                         <color key="backgroundColor" red="0.0" green="0.56862745100000001" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
@@ -484,14 +502,12 @@
                                     <constraint firstItem="els-k7-N75" firstAttribute="trailing" secondItem="gsj-Sf-Fso" secondAttribute="trailing" id="7At-0R-EpA"/>
                                     <constraint firstItem="QOs-wL-719" firstAttribute="leading" secondItem="9WM-03-dfU" secondAttribute="leading" id="CTY-7w-LwP"/>
                                     <constraint firstAttribute="trailing" secondItem="gsj-Sf-Fso" secondAttribute="trailing" id="DXt-4M-JoH"/>
-                                    <constraint firstItem="QDX-rV-WGW" firstAttribute="leading" secondItem="9WM-03-dfU" secondAttribute="leading" id="DfD-xK-Bkq"/>
-                                    <constraint firstAttribute="trailing" secondItem="QDX-rV-WGW" secondAttribute="trailing" id="MJt-df-Pp1"/>
+                                    <constraint firstAttribute="trailing" secondItem="ecj-Z3-s1b" secondAttribute="trailing" id="ELp-Q7-fhq"/>
+                                    <constraint firstItem="ecj-Z3-s1b" firstAttribute="leading" secondItem="9WM-03-dfU" secondAttribute="leading" id="MLE-ig-12c"/>
                                     <constraint firstAttribute="bottom" secondItem="k2m-Wh-pu4" secondAttribute="bottom" constant="294" id="MvQ-Pn-X9m"/>
-                                    <constraint firstItem="hGc-AI-G8h" firstAttribute="top" secondItem="QDX-rV-WGW" secondAttribute="bottom" constant="15" id="aGJ-6p-Ybh"/>
                                     <constraint firstItem="hGc-AI-G8h" firstAttribute="leading" secondItem="9WM-03-dfU" secondAttribute="leading" id="iUa-O0-9Ki"/>
                                     <constraint firstItem="k2m-Wh-pu4" firstAttribute="trailing" secondItem="QOs-wL-719" secondAttribute="trailing" id="kud-y1-6hI"/>
                                     <constraint firstItem="gsj-Sf-Fso" firstAttribute="top" secondItem="9WM-03-dfU" secondAttribute="top" id="sxW-lx-Zu3"/>
-                                    <constraint firstItem="QDX-rV-WGW" firstAttribute="top" secondItem="QOs-wL-719" secondAttribute="bottom" constant="15" id="vBX-OF-VHZ"/>
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="materialDesign" value="YES"/>
@@ -554,7 +570,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Icon" width="57" height="57"/>
+        <image name="placeholder" width="700" height="482"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="Bv2-Wb-Vin"/>
