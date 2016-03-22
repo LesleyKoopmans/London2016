@@ -21,8 +21,15 @@ class ToDoDetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "\(activity.activityName)".capitalizedString
+
+        var img: UIImage?
         
-        titleLbl.text = activity.activityName
+        if let url = activity.activityImage {
+            img = ToDoVC.imageCache.objectForKey(url) as? UIImage
+        }
+        
+        activityImage.image = img
+        
         descriptionLbl.text = activity.activityDescription
         
     }

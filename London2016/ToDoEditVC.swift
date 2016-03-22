@@ -112,7 +112,7 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
                                     
                                     if let links = info["links"] as? Dictionary<String, AnyObject> {
                                         
-                                        if let imgLink = links["image"] as? String {
+                                        if let imgLink = links["image_link"] as? String {
                                             self.postToFirebase(imgLink)
                                         }
                                         
@@ -140,9 +140,9 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     
     func postToFirebase(imgUrl: String) {
         var post: Dictionary<String, AnyObject> = [
-            "title": titleField.text!,
+            "name": titleField.text!,
             "description": descriptionField.text!,
-            "image": imgUrl
+            "imageUrl": imgUrl
         ]
             
         if datePicker.text != nil {

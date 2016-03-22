@@ -45,6 +45,10 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         })
     }
     
+    override func viewDidAppear(animated: Bool) {
+        self.collection.reloadData()
+    }
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let activity = activities[indexPath.row]
@@ -69,6 +73,10 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         
+        let activity = activities[indexPath.row]
+        
+        performSegueWithIdentifier("ToDoDetailVC", sender: activity)
+        
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -87,5 +95,14 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         performSegueWithIdentifier("ToDoCreateVC", sender: nil)
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "ToDoDetailVC" {
+            if let detailsVC = segue.destinationViewController as? ToDoDetailVC {
+                if let activity = sender as? Activity {
+                    detailsVC.activity = activity
+                }
+            }
+        }
+    }
     
 }
