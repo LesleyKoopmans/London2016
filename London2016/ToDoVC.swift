@@ -45,10 +45,6 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         })
     }
     
-    override func viewDidAppear(animated: Bool) {
-        self.collection.reloadData()
-    }
-    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let activity = activities[indexPath.row]
