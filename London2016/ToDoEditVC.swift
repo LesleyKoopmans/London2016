@@ -20,6 +20,7 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     @IBOutlet weak var imageView: UIImageView!
     
     var imagePicker: UIImagePickerController!
+    var itemToEdit: Activity?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +38,10 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         titleField.delegate = self
         priceField.delegate = self
         urlField.delegate = self
+        
+        if itemToEdit != nil {
+            loadItemData()
+        }
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -163,6 +168,33 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         titleField.text = ""
         descriptionField.text = ""
         imageView.image = UIImage(named: "placeholder")
+    }
+    
+    func loadItemData() {
+        if let item = itemToEdit {
+            titleField.text = item.activityName
+            descriptionField.text = item.activityDescription
+            
+            if let date = item.activityDate {
+                datePicker.text = date
+            }
+            
+            if let price = item.activityPrice {
+                priceField.text = price
+            }
+            
+            if let url = item.activityUrl {
+                urlField.text = url
+            }
+            
+            var img: UIImage?
+            
+            if let imgUrl = item.activityImage {
+                img = ToDoVC.imageCache.objectForKey(imgUrl) as? UIImage
+                imageView.image = img
+            }
+            
+        }
     }
     
 }

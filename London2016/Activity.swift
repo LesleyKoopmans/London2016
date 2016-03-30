@@ -12,7 +12,7 @@ class Activity {
     private var _activityName: String!
     private var _activityImage: String?
     private var _activityDescription: String!
-    private var _activityDate: NSDate?
+    private var _activityDate: String?
     private var _activityPrice: String?
     private var _activityUrl: String?
     private var _activityKey: String!
@@ -29,7 +29,7 @@ class Activity {
         return _activityDescription
     }
     
-    var activityDate: NSDate? {
+    var activityDate: String? {
         return _activityDate
     }
     
@@ -50,7 +50,7 @@ class Activity {
     init(activityKey: String, dictionary: Dictionary<String, AnyObject>) {
         self._activityKey = activityKey
         
-        if let date = dictionary["date"] as? NSDate {
+        if let date = dictionary["date"] as? String {
             self._activityDate = date
         }
         
@@ -59,7 +59,7 @@ class Activity {
         }
         
         if let url = dictionary["url"] as? String {
-            self._activityPrice = url
+            self._activityUrl = url
         }
         
         if let name = dictionary["name"] as? String {
