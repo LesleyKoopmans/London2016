@@ -22,27 +22,8 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         collection.dataSource = self
         self.navigationItem.title = "TO DO"
         
-        DataService.ds.REF_ACTIVITY.observeEventType(.Value, withBlock: { snapshot in
-            self.activities = []
-            
-            if let snapshots = snapshot.children.allObjects as? [FDataSnapshot] {
-                
-                for snap in snapshots {
-                    
-                    if let postDict = snap.value as? Dictionary<String, AnyObject> {
-                        
-                        let key = snap.key
-                        
-                        let activity = Activity(activityKey: key, dictionary: postDict)
-                        self.activities.append(activity)
-                    }
-                    
-                }
-                
-            }
-            
-            self.collection.reloadData()
-        })
+        loadData()
+        
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -60,6 +41,8 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             }
             
             cell.configureCell(activity, img: img)
+            cell.layer.cornerRadius = 5
+            cell.layer.masksToBounds = true
             return cell
             
         } else {
@@ -84,7 +67,7 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSizeMake(120, 120)
+        return CGSizeMake(135, 135)
     }
     
     @IBAction func addBtnTapped(sender: AnyObject) {
@@ -99,6 +82,30 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
                 }
             }
         }
+    }
+    
+    func loadData() {
+        DataService.ds.REF_ACTIVITY.queryOrderedByChild("sortOrder").observeEventType(.Value, withBlock: { snapshot in
+            self.activities = []
+            
+            if let snapshots = snapshot.children.allObjects as? [FDataSnapshot] {
+                
+                for snap in snapshots {
+                    
+                    if let postDict = snap.value as? Dictionary<String, AnyObject> {
+                        
+                        let key = snap.key
+                        
+                        let activity = Activity(activityKey: key, dictionary: postDict)
+                        self.activities.append(activity)
+                    }
+                    
+                }
+                
+            }
+            
+            self.collection.reloadData()
+        })
     }
     
 }

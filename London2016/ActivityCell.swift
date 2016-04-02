@@ -19,10 +19,11 @@ class ActivityCell: UICollectionViewCell {
     func configureCell(activity: Activity, img: UIImage?) {
         self.activity = activity
         
-        nameLbl.text = self.activity.activityName.capitalizedString
+        nameLbl.text = self.activity.activityName
         
         if img != nil {
             self.thumbImg.image = img
+            self.thumbImg.clipsToBounds = true
         } else {
             
             request = Alamofire.request(.GET, activity.activityImage!).validate(contentType: ["image/*"]).response(completionHandler: { request, response, data, error in

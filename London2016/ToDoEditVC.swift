@@ -21,13 +21,14 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     
     var imagePicker: UIImagePickerController!
     var itemToEdit: Activity?
+    let placeholderColor: UIColor = UIColor(colorLiteralRed: 0.78, green: 0.78, blue: 0.804, alpha: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         descriptionField.delegate = self
-        descriptionField.text = "Description"
-        descriptionField.textColor = UIColor.darkGrayColor()
+        descriptionField.text = "Omschrijving"
+        descriptionField.textColor = placeholderColor
         descriptionField.font = UIFont(name: "Verdana", size: 14.0)
         descriptionField.textAlignment = .Center
         descriptionField.editable = true
@@ -57,12 +58,13 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         let datePickerView: UIDatePicker = UIDatePicker()
         datePickerView.datePickerMode = .Date
         sender.inputView = datePickerView
-        datePickerView.addTarget(self, action: Selector("datePickerValueChanged:"), forControlEvents: UIControlEvents.ValueChanged)
+        datePickerView.addTarget(self, action: #selector(ToDoEditVC.datePickerValueChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
     }
     
     func datePickerValueChanged(sender: UIDatePicker) {
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateStyle = .MediumStyle
+        dateFormatter.dateStyle = .ShortStyle
+        dateFormatter.locale = NSLocale(localeIdentifier: "fr_FR")
         dateFormatter.timeStyle = .NoStyle
         datePicker.text = dateFormatter.stringFromDate(sender.date)
     }
@@ -75,7 +77,7 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     }
     
     func textViewDidBeginEditing(textView: UITextView) {
-        if descriptionField.textColor == UIColor.darkGrayColor() {
+        if descriptionField.textColor == placeholderColor {
             descriptionField.text = nil
             descriptionField.textColor = UIColor.blackColor()
         }
@@ -83,13 +85,22 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     
     func textViewDidEndEditing(textView: UITextView) {
         if descriptionField.text.isEmpty {
-            descriptionField.text = "Description"
-            descriptionField.textColor = UIColor.lightGrayColor()
+            descriptionField.text = "Omschrijving"
+            descriptionField.textColor = placeholderColor
         }
     }
     
     @IBAction func selectImage(sender: UITapGestureRecognizer) {
         presentViewController(imagePicker, animated: true, completion: nil)
+    }
+    
+    @IBAction func cancelBtnTapped(sender: UIButton) {
+        if itemToEdit != nil {
+            //Hier code om de post te verwijderen
+            print("Verwijder item van Firebase")
+        } else {
+            self.navigationController?.popViewControllerAnimated(true)
+        }
     }
     
     @IBAction func addBtnTapped(sender: UIButton) {
@@ -98,7 +109,7 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             if let img = imageView.image {
                 let urlStr = "https://post.imageshack.us/upload_api.php"
                 let url = NSURL(string: urlStr)!
-                let imgData = UIImageJPEGRepresentation(img, 0.8)!
+                let imgData = UIImageJPEGRepresentation(img, 0.4)!
                 let keyData = "389CIJPV7ede49f95a967a77e48a44c0aa697929".dataUsingEncoding(NSUTF8StringEncoding)!
                 let keyJSON = "json".dataUsingEncoding(NSUTF8StringEncoding)!
                 
@@ -152,6 +163,13 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             
         if datePicker.text != nil {
             post["date"] = datePicker.text
+            
+            let date = datePicker.text
+            
+            let newDate = removeString(date!)
+            print(newDate)
+            
+            post["sortOrder"] = newDate
         }
         
         if priceField.text != nil {
@@ -174,6 +192,7 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         if let item = itemToEdit {
             titleField.text = item.activityName
             descriptionField.text = item.activityDescription
+            descriptionField.textColor = UIColor.blackColor()
             
             if let date = item.activityDate {
                 datePicker.text = date
@@ -195,6 +214,20 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             }
             
         }
+    }
+    
+    func removeString(string: String) -> String {
+        let newStr = string.stringByReplacingOccurrencesOfString("/", withString: "")
+        
+        let year = String(newStr.characters.prefix(4))
+        
+        let firstTwo = String(year.characters.prefix(2))
+        let addFirstTwo = year + String(firstTwo)
+        let tussen = String(addFirstTwo.characters.dropFirst())
+        let endResult = String(tussen.characters.dropFirst())
+        
+        return endResult
+        
     }
     
 }
