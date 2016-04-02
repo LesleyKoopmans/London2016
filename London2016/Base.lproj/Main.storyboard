@@ -352,7 +352,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xxQ-B2-e31">
-                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="Sbr-Qi-XE0">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="Sbr-Qi-XE0">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="editBtnTapped:" destination="V6P-ra-FfZ" id="xat-v1-kyw"/>
@@ -558,7 +558,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="EKD-Xg-dLZ">
-                        <barButtonItem key="rightBarButtonItem" systemItem="cancel" id="7PF-fe-iaD">
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="7PF-fe-iaD">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <connections>
                                 <action selector="cancelBtnTapped:" destination="hsn-qg-3Hy" id="Fec-ys-s9P"/>
@@ -572,6 +572,7 @@
                         <outlet property="imageView" destination="QDX-rV-WGW" id="iFb-o3-Ycs"/>
                         <outlet property="priceField" destination="21K-GK-RuH" id="fbn-UZ-g8Y"/>
                         <outlet property="titleField" destination="gsj-Sf-Fso" id="M5D-Lj-L43"/>
+                        <outlet property="urlBtn" destination="hGc-AI-G8h" id="gyq-Sg-R34"/>
                         <outlet property="urlField" destination="QOs-wL-719" id="GS6-Bt-Kff"/>
                     </connections>
                 </viewController>

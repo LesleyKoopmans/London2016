@@ -18,10 +18,12 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     @IBOutlet weak var priceField: UITextField!
     @IBOutlet weak var urlField: UITextField!
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var urlBtn: UIButton!
     
     var imagePicker: UIImagePickerController!
     var itemToEdit: Activity?
     let placeholderColor: UIColor = UIColor(colorLiteralRed: 0.78, green: 0.78, blue: 0.804, alpha: 1)
+    var editItem: Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,7 +44,11 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         
         if itemToEdit != nil {
             loadItemData()
+            editItem = true
+        } else {
+            editItem = false
         }
+        print(editItem)
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -96,29 +102,45 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     
     @IBAction func cancelBtnTapped(sender: UIButton) {
         if itemToEdit != nil {
-            //Hier code om de post te verwijderen
-            print("Verwijder item van Firebase")
+            let postRef = DataService.ds.REF_ACTIVITY.childByAppendingPath("\(self.itemToEdit!.activityKey)")
+            
+            postRef.observeSingleEventOfType(.Value, withBlock: { snapshot in
+                
+                postRef.removeValue()
+            self.navigationController?.popToViewController(self.navigationController!.viewControllers[1], animated: true)
+                
+            })
         } else {
             self.navigationController?.popViewControllerAnimated(true)
         }
     }
     
     @IBAction func addBtnTapped(sender: UIButton) {
-        if let txt = titleField.text where txt != "" {
+        
+        if itemToEdit != nil {
+            let postRef = DataService.ds.REF_ACTIVITY.childByAppendingPath("\(self.itemToEdit!.activityKey)")
             
-            if let img = imageView.image {
-                let urlStr = "https://post.imageshack.us/upload_api.php"
-                let url = NSURL(string: urlStr)!
-                let imgData = UIImageJPEGRepresentation(img, 0.4)!
-                let keyData = "389CIJPV7ede49f95a967a77e48a44c0aa697929".dataUsingEncoding(NSUTF8StringEncoding)!
-                let keyJSON = "json".dataUsingEncoding(NSUTF8StringEncoding)!
+            postRef.updateChildValues([
+                    "name": titleField.text!,
+                    "description": descriptionField.text!
+                ])
+            
+        } else {
+            if let txt = titleField.text where txt != "" {
                 
-                Alamofire.upload(.POST, url, multipartFormData: { multipartFormData in
+                if let img = imageView.image {
+                    let urlStr = "https://post.imageshack.us/upload_api.php"
+                    let url = NSURL(string: urlStr)!
+                    let imgData = UIImageJPEGRepresentation(img, 0.4)!
+                    let keyData = "389CIJPV7ede49f95a967a77e48a44c0aa697929".dataUsingEncoding(NSUTF8StringEncoding)!
+                    let keyJSON = "json".dataUsingEncoding(NSUTF8StringEncoding)!
                     
-                    multipartFormData.appendBodyPart(data: imgData, name: "fileupload", fileName: "image", mimeType: "image/jpg")
-                    multipartFormData.appendBodyPart(data: keyData, name: "key")
-                    multipartFormData.appendBodyPart(data: keyJSON, name: "format")
-                    
+                    Alamofire.upload(.POST, url, multipartFormData: { multipartFormData in
+                        
+                        multipartFormData.appendBodyPart(data: imgData, name: "fileupload", fileName: "image", mimeType: "image/jpg")
+                        multipartFormData.appendBodyPart(data: keyData, name: "key")
+                        multipartFormData.appendBodyPart(data: keyJSON, name: "format")
+                        
                     }) { encodingResult in
                         
                         switch encodingResult {
@@ -141,13 +163,14 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
                         case .Failure(let error):
                             print(error)
                         }
+                    }
+                    
+                } else {
+                    print("Upload zonder foto")
                 }
                 
-            } else {
-                print("Upload zonder foto")
+                
             }
-            
-            
         }
         
         self.navigationController?.popViewControllerAnimated(true)
@@ -214,6 +237,8 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             }
             
         }
+        
+        urlBtn.setTitle("Wijzig", forState: .Normal)
     }
     
     func removeString(string: String) -> String {

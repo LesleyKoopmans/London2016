@@ -33,6 +33,14 @@ class ToDoDetailVC: UIViewController {
         
     }
     
+    override func viewDidAppear(animated: Bool) {
+        loadData()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        loadData()
+    }
+    
     @IBAction func urlBtnTapped(sender: UIButton) {
         
     }
@@ -53,6 +61,7 @@ class ToDoDetailVC: UIViewController {
     
     func loadData() {
         self.navigationItem.title = "\(activity.activityName)"
+        descriptionLbl.text = activity.activityDescription
         
         var img: UIImage?
         
@@ -98,6 +107,5 @@ class ToDoDetailVC: UIViewController {
             urlButton.hidden = true
         }
         
-        descriptionLbl.text = activity.activityDescription
     }
 }

@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Firebase
 
 class Activity {
     private var _activityName: String!
@@ -16,6 +17,7 @@ class Activity {
     private var _activityPrice: String?
     private var _activityUrl: String?
     private var _activityKey: String!
+    private var _activityRef: Firebase!
     
     var activityName: String {
         return _activityName
@@ -39,6 +41,10 @@ class Activity {
     
     var activityUrl: String? {
         return _activityUrl
+    }
+    
+    var activityKey: String! {
+        return _activityKey
     }
     
     init(name: String, image: String, description: String) {
@@ -74,6 +80,7 @@ class Activity {
             self._activityImage = image
         }
         
+        self._activityRef = DataService.ds.REF_ACTIVITY.childByAppendingPath(self._activityKey)
         
     }
     
