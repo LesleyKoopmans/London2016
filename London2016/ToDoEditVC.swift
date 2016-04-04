@@ -23,7 +23,6 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     var imagePicker: UIImagePickerController!
     var itemToEdit: Activity?
     let placeholderColor: UIColor = UIColor(colorLiteralRed: 0.78, green: 0.78, blue: 0.804, alpha: 1)
-    var editItem: Bool?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,11 +43,7 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         
         if itemToEdit != nil {
             loadItemData()
-            editItem = true
-        } else {
-            editItem = false
-        }
-        print(editItem)
+        } 
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -118,58 +113,13 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     @IBAction func addBtnTapped(sender: UIButton) {
         
         if itemToEdit != nil {
-            let postRef = DataService.ds.REF_ACTIVITY.childByAppendingPath("\(self.itemToEdit!.activityKey)")
-            
-            postRef.updateChildValues([
-                    "name": titleField.text!,
-                    "description": descriptionField.text!
-                ])
+            if let txt = titleField.text where txt != "" {
+                uploadImage()
+            }
             
         } else {
             if let txt = titleField.text where txt != "" {
-                
-                if let img = imageView.image {
-                    let urlStr = "https://post.imageshack.us/upload_api.php"
-                    let url = NSURL(string: urlStr)!
-                    let imgData = UIImageJPEGRepresentation(img, 0.4)!
-                    let keyData = "389CIJPV7ede49f95a967a77e48a44c0aa697929".dataUsingEncoding(NSUTF8StringEncoding)!
-                    let keyJSON = "json".dataUsingEncoding(NSUTF8StringEncoding)!
-                    
-                    Alamofire.upload(.POST, url, multipartFormData: { multipartFormData in
-                        
-                        multipartFormData.appendBodyPart(data: imgData, name: "fileupload", fileName: "image", mimeType: "image/jpg")
-                        multipartFormData.appendBodyPart(data: keyData, name: "key")
-                        multipartFormData.appendBodyPart(data: keyJSON, name: "format")
-                        
-                    }) { encodingResult in
-                        
-                        switch encodingResult {
-                        case .Success(let upload, _, _):
-                            upload.responseJSON(completionHandler: { response in
-                                if let info = response.result.value as? Dictionary<String, AnyObject> {
-                                    
-                                    if let links = info["links"] as? Dictionary<String, AnyObject> {
-                                        
-                                        if let imgLink = links["image_link"] as? String {
-                                            self.postToFirebase(imgLink)
-                                        }
-                                        
-                                    }
-                                    
-                                }
-                                
-                            })
-                            
-                        case .Failure(let error):
-                            print(error)
-                        }
-                    }
-                    
-                } else {
-                    print("Upload zonder foto")
-                }
-                
-                
+                uploadImage()
             }
         }
         
@@ -178,33 +128,66 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     }
     
     func postToFirebase(imgUrl: String) {
-        var post: Dictionary<String, AnyObject> = [
-            "name": titleField.text!,
-            "description": descriptionField.text!,
-            "imageUrl": imgUrl
-        ]
+        if itemToEdit != nil {
+            let postRef = DataService.ds.REF_ACTIVITY.childByAppendingPath("\(self.itemToEdit!.activityKey)")
             
-        if datePicker.text != nil {
-            post["date"] = datePicker.text
+            var post: Dictionary<String, AnyObject> = [
+                "name": titleField.text!,
+                "description": descriptionField.text!,
+                "imageUrl": imgUrl
+            ]
             
-            let date = datePicker.text
+            if datePicker.text != nil {
+                post["date"] = datePicker.text
+                
+                let date = datePicker.text
+                
+                let newDate = removeString(date!)
+                print(newDate)
+                
+                post["sortOrder"] = newDate
+            }
             
-            let newDate = removeString(date!)
-            print(newDate)
+            if priceField.text != nil {
+                post["price"] = priceField.text
+            }
             
-            post["sortOrder"] = newDate
+            if urlField.text != nil {
+                post["url"] = urlField.text
+            }
+
+            
+            postRef.updateChildValues(post)
+            
+        } else {
+            var post: Dictionary<String, AnyObject> = [
+                "name": titleField.text!,
+                "description": descriptionField.text!,
+                "imageUrl": imgUrl
+            ]
+            
+            if datePicker.text != nil {
+                post["date"] = datePicker.text
+                
+                let date = datePicker.text
+                
+                let newDate = removeString(date!)
+                print(newDate)
+                
+                post["sortOrder"] = newDate
+            }
+            
+            if priceField.text != nil {
+                post["price"] = priceField.text
+            }
+            
+            if urlField.text != nil {
+                post["url"] = urlField.text
+            }
+            
+            let firebasePost = DataService.ds.REF_ACTIVITY.childByAutoId()
+            firebasePost.setValue(post)
         }
-        
-        if priceField.text != nil {
-            post["price"] = priceField.text
-        }
-        
-        if urlField.text != nil {
-            post["url"] = urlField.text
-        }
-        
-        let firebasePost = DataService.ds.REF_ACTIVITY.childByAutoId()
-        firebasePost.setValue(post)
         
         titleField.text = ""
         descriptionField.text = ""
@@ -253,6 +236,50 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         
         return endResult
         
+    }
+    
+    func uploadImage() {
+        if let img = imageView.image {
+            let urlStr = "https://post.imageshack.us/upload_api.php"
+            let url = NSURL(string: urlStr)!
+            let imgData = UIImageJPEGRepresentation(img, 0.4)!
+            let keyData = "389CIJPV7ede49f95a967a77e48a44c0aa697929".dataUsingEncoding(NSUTF8StringEncoding)!
+            let keyJSON = "json".dataUsingEncoding(NSUTF8StringEncoding)!
+            
+            Alamofire.upload(.POST, url, multipartFormData: { multipartFormData in
+                
+                multipartFormData.appendBodyPart(data: imgData, name: "fileupload", fileName: "image", mimeType: "image/jpg")
+                multipartFormData.appendBodyPart(data: keyData, name: "key")
+                multipartFormData.appendBodyPart(data: keyJSON, name: "format")
+                
+            }) { encodingResult in
+                
+                switch encodingResult {
+                case .Success(let upload, _, _):
+                    upload.responseJSON(completionHandler: { response in
+                        if let info = response.result.value as? Dictionary<String, AnyObject> {
+                            
+                            if let links = info["links"] as? Dictionary<String, AnyObject> {
+                                
+                                if let imgLink = links["image_link"] as? String {
+                                    self.postToFirebase(imgLink)
+                                }
+                                
+                            }
+                            
+                        }
+                        
+                    })
+                    
+                case .Failure(let error):
+                    print(error)
+                }
+            }
+            
+        } else {
+            print("Upload zonder foto")
+        }
+
     }
     
 }

@@ -20,6 +20,11 @@
 		67232BC91C98C4B80006540A /* ToDoDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67232BC81C98C4B80006540A /* ToDoDetailVC.swift */; };
 		67232BCC1C99A5790006540A /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67232BCB1C99A5790006540A /* DataService.swift */; };
 		67232BCE1C9C4BBB0006540A /* ToDoEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67232BCD1C9C4BBB0006540A /* ToDoEditVC.swift */; };
+		67238F861CB0583500C36898 /* HaveDoneVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67238F851CB0583100C36898 /* HaveDoneVC.swift */; };
+		67238F881CB0602A00C36898 /* Picture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67238F871CB0602A00C36898 /* Picture.swift */; };
+		67238F8A1CB064B700C36898 /* PictureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67238F891CB064B700C36898 /* PictureCell.swift */; };
+		67238F8C1CB2AE9100C36898 /* HaveDoneDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67238F8B1CB2AE9100C36898 /* HaveDoneDetailVC.swift */; };
+		67238F8E1CB2B55500C36898 /* HaveDoneEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67238F8D1CB2B55500C36898 /* HaveDoneEditVC.swift */; };
 		D9A395A9DC8B9E8127091628 /* Pods_London2016.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24B77B716B1E06EA0CCD813 /* Pods_London2016.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +45,11 @@
 		67232BC81C98C4B80006540A /* ToDoDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoDetailVC.swift; sourceTree = "<group>"; };
 		67232BCB1C99A5790006540A /* DataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 		67232BCD1C9C4BBB0006540A /* ToDoEditVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToDoEditVC.swift; sourceTree = "<group>"; };
+		67238F851CB0583100C36898 /* HaveDoneVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HaveDoneVC.swift; sourceTree = "<group>"; };
+		67238F871CB0602A00C36898 /* Picture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Picture.swift; sourceTree = "<group>"; };
+		67238F891CB064B700C36898 /* PictureCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PictureCell.swift; sourceTree = "<group>"; };
+		67238F8B1CB2AE9100C36898 /* HaveDoneDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HaveDoneDetailVC.swift; sourceTree = "<group>"; };
+		67238F8D1CB2B55500C36898 /* HaveDoneEditVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HaveDoneEditVC.swift; sourceTree = "<group>"; };
 		92E417D97619AC9DADD7AC26 /* Pods-London2016.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-London2016.debug.xcconfig"; path = "Pods/Target Support Files/Pods-London2016/Pods-London2016.debug.xcconfig"; sourceTree = "<group>"; };
 		D24B77B716B1E06EA0CCD813 /* Pods_London2016.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_London2016.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -98,6 +108,9 @@
 				67232BBE1C98AB120006540A /* ToDoVC.swift */,
 				67232BC81C98C4B80006540A /* ToDoDetailVC.swift */,
 				67232BCD1C9C4BBB0006540A /* ToDoEditVC.swift */,
+				67238F851CB0583100C36898 /* HaveDoneVC.swift */,
+				67238F8B1CB2AE9100C36898 /* HaveDoneDetailVC.swift */,
+				67238F8D1CB2B55500C36898 /* HaveDoneEditVC.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -106,6 +119,8 @@
 			isa = PBXGroup;
 			children = (
 				67232BBA1C9742130006540A /* UIViewStyling.swift */,
+				67232BC61C98B4650006540A /* ActivityCell.swift */,
+				67238F891CB064B700C36898 /* PictureCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -114,7 +129,7 @@
 			isa = PBXGroup;
 			children = (
 				67232BC21C98AF950006540A /* Activity.swift */,
-				67232BC61C98B4650006540A /* ActivityCell.swift */,
+				67238F871CB0602A00C36898 /* Picture.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -267,8 +282,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				67238F881CB0602A00C36898 /* Picture.swift in Sources */,
 				67232BCE1C9C4BBB0006540A /* ToDoEditVC.swift in Sources */,
+				67238F8A1CB064B700C36898 /* PictureCell.swift in Sources */,
 				67232BCC1C99A5790006540A /* DataService.swift in Sources */,
+				67238F861CB0583500C36898 /* HaveDoneVC.swift in Sources */,
+				67238F8E1CB2B55500C36898 /* HaveDoneEditVC.swift in Sources */,
+				67238F8C1CB2AE9100C36898 /* HaveDoneDetailVC.swift in Sources */,
 				67232BA51C973B2B0006540A /* MainVC.swift in Sources */,
 				67232BC31C98AF950006540A /* Activity.swift in Sources */,
 				67232BBB1C9742130006540A /* UIViewStyling.swift in Sources */,

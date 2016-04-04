@@ -8,6 +8,7 @@
 
 import UIKit
 import Alamofire
+import Firebase
 
 class ToDoDetailVC: UIViewController {
     
@@ -33,12 +34,8 @@ class ToDoDetailVC: UIViewController {
         
     }
     
-    override func viewDidAppear(animated: Bool) {
-        loadData()
-    }
-    
     override func viewWillAppear(animated: Bool) {
-        loadData()
+        reloadData()
     }
     
     @IBAction func urlBtnTapped(sender: UIButton) {
@@ -57,6 +54,62 @@ class ToDoDetailVC: UIViewController {
                 }
             }
         }
+    }
+    
+    func reloadData() {
+        DataService.ds.REF_ACTIVITY.childByAppendingPath("\(activity.activityKey)").observeEventType(.Value, withBlock: { snapshot in
+            
+            if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
+                self.navigationItem.title = postDict["name"] as? String
+                self.descriptionLbl.text = postDict["description"] as? String
+                
+                var img: UIImage?
+                
+                if let date = postDict["date"] {
+                    self.dateLbl.text = date as? String
+                } else {
+                    self.dateStackView.hidden = true
+                    self.parentStackView.distribution = .Fill
+                    self.priceParentLbl.textAlignment = .Center
+                    self.priceLbl.textAlignment = .Center
+                }
+                
+                if let price = postDict["price"] {
+                    self.priceLbl.text = price as? String
+                } else {
+                    self.priceStackView.hidden = true
+                    self.parentStackView.distribution = .Fill
+                    self.dateParentLbl.textAlignment = .Center
+                    self.dateLbl.textAlignment = .Center
+                }
+                
+                if let imgUrl = postDict["imageUrl"] {
+                    if img != nil {
+                        self.activityImage.image = img
+                    } else {
+                        
+                        self.request = Alamofire.request(.GET, self.activity.activityImage!).validate(contentType: ["image/*"]).response(completionHandler: { request, response, data, error in
+                            if error == nil {
+                                let img = UIImage(data: data!)!
+                                self.activityImage.image = img
+                                self.activityImage.clipsToBounds = true
+                                ToDoVC.imageCache.setObject(img, forKey: self.activity.activityImage!)
+                            }
+                        })
+                        
+                    }
+                    img = ToDoVC.imageCache.objectForKey(imgUrl) as? UIImage
+                }
+                
+                if let webUrl = postDict["url"] {
+                    self.urlButton.setTitle("\(webUrl)", forState: .Normal)
+                } else {
+                    self.urlButton.hidden = true
+                }
+                
+                self.activity = Activity(activityKey: "\(self.activity.activityKey)", dictionary: postDict)
+            }
+        })
     }
     
     func loadData() {
