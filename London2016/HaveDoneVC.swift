@@ -84,6 +84,10 @@ class HaveDoneVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         })
     }
     
+    @IBAction func addBtnTapped() {
+        performSegueWithIdentifier("HaveDoneCreateVC", sender: nil)
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "HaveDoneDetailVC" {
             if let detailVC = segue.destinationViewController as? HaveDoneDetailVC {

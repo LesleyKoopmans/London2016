@@ -13,6 +13,7 @@ class Picture {
     private var _pictureName: String!
     private var _pictureDescription: String!
     private var _pictureImage: String!
+    private var _pictureLocation: String?
     private var _pictureKey: String!
     private var _pictureRef: Firebase!
     
@@ -26,6 +27,10 @@ class Picture {
     
     var pictureImage: String {
         return _pictureImage
+    }
+    
+    var pictureLocation: String? {
+        return _pictureLocation
     }
     
     var pictureKey: String {

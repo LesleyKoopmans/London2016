@@ -132,7 +132,7 @@
                                                                         <constraint firstItem="cfS-dV-Zet" firstAttribute="centerY" secondItem="Gbx-yI-yeD" secondAttribute="centerY" id="iag-Rr-j0Q"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="3fN-Uc-WMk">
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="3fN-Uc-WMk">
                                                                     <rect key="frame" x="0.0" y="30" width="272" height="145"/>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                 </imageView>
@@ -223,7 +223,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="iiH-BS-aPg">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             <connections>
-                                <action selector="addBtnTapped:" destination="QG0-vQ-nr5" id="DdV-6y-NwZ"/>
+                                <action selector="addBtnTapped" destination="cAo-hr-JbR" id="dGs-sr-Dho"/>
                                 <segue destination="OJy-po-esB" kind="show" identifier="HaveDoneCreateVC" id="HP6-u5-Y74"/>
                             </connections>
                         </barButtonItem>
@@ -268,7 +268,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lUE-ER-Ddg" customClass="CustomTextView" customModule="London2016" customModuleProvider="target">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lUE-ER-Ddg">
                                         <rect key="frame" x="0.0" y="50" width="288" height="70"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -350,6 +350,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                         <connections>
+                                            <action selector="addBtnTapped" destination="OJy-po-esB" eventType="touchUpInside" id="Bpb-tc-NHf"/>
                                             <action selector="addBtnTapped:" destination="hsn-qg-3Hy" eventType="touchUpInside" id="dMn-d2-ryb"/>
                                         </connections>
                                     </button>
@@ -375,15 +376,29 @@
                             <constraint firstItem="4dg-S7-vK2" firstAttribute="top" secondItem="Xsb-VR-tqv" secondAttribute="bottom" constant="20" id="yhS-N3-CHv"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="fcf-tG-Jfa">
+                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="4GM-DE-MyD">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="cancelBtnTapped:" destination="OJy-po-esB" id="kXa-SC-CbG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="descriptionField" destination="lUE-ER-Ddg" id="BSl-3R-Rxd"/>
                         <outlet property="imageView" destination="VBm-La-Svo" id="NIJ-Uv-Chg"/>
                         <outlet property="locationField" destination="INE-5X-ZcT" id="Ro9-iv-ahx"/>
                         <outlet property="titleField" destination="G9I-Cv-7eO" id="1C2-XS-usZ"/>
+                        <outlet property="urlBtn" destination="Rlc-r4-x9U" id="SWl-2v-ask"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IF0-9t-EU2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="qaG-uE-uya"/>
+                <tapGestureRecognizer id="qaG-uE-uya">
+                    <connections>
+                        <action selector="selectImage:" destination="OJy-po-esB" id="6Mz-eu-phN"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1577" y="1383"/>
         </scene>
@@ -405,8 +420,12 @@
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="130" id="75U-fM-qZ0"/>
                                 </constraints>
                             </mapView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreenImage" translatesAutoresizingMaskIntoConstraints="NO" id="5aK-c3-zyZ">
+                            <imageView contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="launchScreenImage" translatesAutoresizingMaskIntoConstraints="NO" id="5aK-c3-zyZ">
                                 <rect key="frame" x="0.0" y="64" width="320" height="374"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="669-D1-nuP" appends="YES" id="ER1-ua-cyB"/>
+                                </connections>
                             </imageView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ocE-dA-Czn">
                                 <rect key="frame" x="0.0" y="338" width="320" height="50"/>
@@ -444,16 +463,84 @@
                             <constraint firstItem="Ts5-t7-ihe" firstAttribute="leading" secondItem="C3V-kU-mn4" secondAttribute="leading" id="ud8-MU-1VB"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="HTp-H2-CG4">
+                        <barButtonItem key="rightBarButtonItem" systemItem="compose" id="xez-j7-Pfd">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="editBtnTapped" destination="XWj-sZ-hwg" id="PlB-O8-vyg"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="descriptionLbl" destination="CjI-IB-srU" id="FqP-3K-0kY"/>
                         <outlet property="mapView" destination="Ts5-t7-ihe" id="lIi-pC-G23"/>
                         <outlet property="postImage" destination="5aK-c3-zyZ" id="3fD-8r-aDG"/>
+                        <segue destination="hO9-1f-69r" kind="show" identifier="HaveDonePictureVC" id="OBE-og-nHI"/>
+                        <segue destination="OJy-po-esB" kind="show" identifier="HaveDoneEditVC" id="8S5-Td-c0x"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QOw-YE-B63" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="669-D1-nuP">
+                    <connections>
+                        <action selector="pictureTapped:" destination="XWj-sZ-hwg" id="Ujw-bv-AmE"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2110" y="680"/>
+        </scene>
+        <!--Have Done PictureVC-->
+        <scene sceneID="BlK-Z0-iPX">
+            <objects>
+                <viewController id="hO9-1f-69r" customClass="HaveDonePictureVC" customModule="London2016" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="mPQ-YT-wmm"/>
+                        <viewControllerLayoutGuide type="bottom" id="05w-Wf-rKa"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5Cg-0f-6rw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" maximumZoomScale="3" translatesAutoresizingMaskIntoConstraints="NO" id="2zP-zl-c4Z">
+                                <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="placeholder" translatesAutoresizingMaskIntoConstraints="NO" id="r02-ez-czG">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="504" id="he3-MU-zsg"/>
+                                        </constraints>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="boolean" keyPath="materialDesign" value="NO"/>
+                                        </userDefinedRuntimeAttributes>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="r02-ez-czG" firstAttribute="leading" secondItem="2zP-zl-c4Z" secondAttribute="leading" id="2bl-fl-JfV"/>
+                                    <constraint firstItem="r02-ez-czG" firstAttribute="centerX" secondItem="2zP-zl-c4Z" secondAttribute="centerX" id="bsD-wi-jD3"/>
+                                    <constraint firstItem="r02-ez-czG" firstAttribute="top" secondItem="2zP-zl-c4Z" secondAttribute="top" id="fe9-QL-bxw"/>
+                                    <constraint firstAttribute="trailing" secondItem="r02-ez-czG" secondAttribute="trailing" id="ySc-tf-Tnu"/>
+                                    <constraint firstAttribute="bottom" secondItem="r02-ez-czG" secondAttribute="bottom" id="zX5-z2-brX"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="2zP-zl-c4Z" secondAttribute="trailing" id="3ov-ay-M72"/>
+                            <constraint firstItem="05w-Wf-rKa" firstAttribute="top" secondItem="2zP-zl-c4Z" secondAttribute="bottom" id="Fcz-FM-HXJ"/>
+                            <constraint firstItem="2zP-zl-c4Z" firstAttribute="top" secondItem="mPQ-YT-wmm" secondAttribute="bottom" id="SZp-0D-ts2"/>
+                            <constraint firstItem="2zP-zl-c4Z" firstAttribute="leading" secondItem="5Cg-0f-6rw" secondAttribute="leading" id="SxT-DR-FLQ"/>
+                        </constraints>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="imageView" destination="r02-ez-czG" id="NcW-0S-JUc"/>
+                        <outlet property="scrollView" destination="2zP-zl-c4Z" id="z5u-pZ-2hu"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="C52-Ea-DaI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2584" y="680"/>
         </scene>
         <!--To DoVC-->
         <scene sceneID="bxX-Ap-vjv">
@@ -783,7 +870,7 @@
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
                                     </textField>
-                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="els-k7-N75" customClass="CustomTextView" customModule="London2016" customModuleProvider="target">
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="els-k7-N75">
                                         <rect key="frame" x="0.0" y="50" width="288" height="70"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -985,6 +1072,7 @@
         <image name="placeholder" width="700" height="482"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="9K5-UX-8Or"/>
+        <segue reference="8S5-Td-c0x"/>
+        <segue reference="Bv2-Wb-Vin"/>
     </inferredMetricsTieBreakers>
 </document>

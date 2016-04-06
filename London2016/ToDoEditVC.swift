@@ -22,24 +22,19 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     
     var imagePicker: UIImagePickerController!
     var itemToEdit: Activity?
-    let placeholderColor: UIColor = UIColor(colorLiteralRed: 0.78, green: 0.78, blue: 0.804, alpha: 1)
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        descriptionField.delegate = self
-        descriptionField.text = "Omschrijving"
-        descriptionField.textColor = placeholderColor
-        descriptionField.font = UIFont(name: "Verdana", size: 14.0)
-        descriptionField.textAlignment = .Center
-        descriptionField.editable = true
         
         imageView.clipsToBounds = true
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
         titleField.delegate = self
         priceField.delegate = self
+        descriptionField.delegate = self
         urlField.delegate = self
+        
+        descriptionFieldInit()
         
         if itemToEdit != nil {
             loadItemData()
@@ -112,16 +107,7 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     
     @IBAction func addBtnTapped(sender: UIButton) {
         
-        if itemToEdit != nil {
-            if let txt = titleField.text where txt != "" {
-                uploadImage()
-            }
-            
-        } else {
-            if let txt = titleField.text where txt != "" {
-                uploadImage()
-            }
-        }
+        uploadImage()
         
         self.navigationController?.popViewControllerAnimated(true)
         
@@ -236,6 +222,14 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         
         return endResult
         
+    }
+    
+    func descriptionFieldInit() {
+        descriptionField.text = "Omschrijving"
+        descriptionField.textColor = placeholderColor
+        descriptionField.font = UIFont(name: "Verdana", size: 14.0)
+        descriptionField.textAlignment = .Center
+        descriptionField.editable = true
     }
     
     func uploadImage() {
