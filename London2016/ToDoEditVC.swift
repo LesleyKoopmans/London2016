@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import Firebase
+import EventKit
 
 class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITextViewDelegate {
     
@@ -22,6 +23,8 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     
     var imagePicker: UIImagePickerController!
     var itemToEdit: Activity?
+    let eventStore = EKEventStore()
+    var calendarDate: NSDate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +38,8 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         urlField.delegate = self
         
         descriptionFieldInit()
+        
+        checkAccessToCalendar()
         
         if itemToEdit != nil {
             loadItemData()
@@ -63,6 +68,8 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         dateFormatter.locale = NSLocale(localeIdentifier: "fr_FR")
         dateFormatter.timeStyle = .NoStyle
         datePicker.text = dateFormatter.stringFromDate(sender.date)
+        
+        calendarDate = dateFormatter.dateFromString(datePicker.text!)
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
@@ -129,10 +136,17 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
                 let date = datePicker.text
                 
                 let newDate = removeString(date!)
-                print(newDate)
                 
                 post["sortOrder"] = newDate
+                
+                insertEvent(eventStore)
             }
+            
+            if datePicker.text == "" {
+                post["sortOrder"] = "1231"
+            }
+            
+            print(datePicker.text)
             
             if priceField.text != nil {
                 post["price"] = priceField.text
@@ -152,15 +166,22 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
                 "imageUrl": imgUrl
             ]
             
+            print(datePicker.text)
+            
             if datePicker.text != nil {
                 post["date"] = datePicker.text
                 
                 let date = datePicker.text
                 
                 let newDate = removeString(date!)
-                print(newDate)
                 
                 post["sortOrder"] = newDate
+                
+                insertEvent(eventStore)
+            }
+            
+            if datePicker.text == "" {
+                post["sortOrder"] = "1231"
             }
             
             if priceField.text != nil {
@@ -236,7 +257,7 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         if let img = imageView.image {
             let urlStr = "https://post.imageshack.us/upload_api.php"
             let url = NSURL(string: urlStr)!
-            let imgData = UIImageJPEGRepresentation(img, 0.4)!
+            let imgData = UIImageJPEGRepresentation(img, 0.2)!
             let keyData = "389CIJPV7ede49f95a967a77e48a44c0aa697929".dataUsingEncoding(NSUTF8StringEncoding)!
             let keyJSON = "json".dataUsingEncoding(NSUTF8StringEncoding)!
             
@@ -276,4 +297,56 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
 
     }
     
+    func checkAccessToCalendar() {
+        
+        switch EKEventStore.authorizationStatusForEntityType(EKEntityType.Event) {
+        
+        case .Authorized:
+            print("Agenda toegestaan")
+        
+        case .Denied:
+            print("Access denied")
+            
+        case .NotDetermined:
+            eventStore.requestAccessToEntityType(.Event, completion: { (granted: Bool, error: NSError?) -> Void in
+                if granted {
+                    self.insertEvent(self.eventStore)
+                } else {
+                    print("Access Denied")
+                }
+            })
+        default:
+            print("Case Default")
+        }
+    }
+    
+    func insertEvent(store: EKEventStore) {
+        let calendars = store.calendarsForEntityType(EKEntityType.Event) as [EKCalendar]
+        
+        for calendar in calendars {
+            if calendar.title == "London2016" {
+                let endDate = calendarDate!.dateByAddingTimeInterval(1 * 60 * 60)
+                
+                let event = EKEvent(eventStore: store)
+                event.calendar = calendar
+                
+                if let title = titleField.text {
+                    event.title = title
+                }
+//                event.title = "\(titleField.text)"
+                event.startDate = calendarDate!
+                event.endDate = endDate
+                event.allDay = true
+                event.notes = "\(descriptionField.text)"
+                
+                do {
+                    let result = try store.saveEvent(event, span: EKSpan.ThisEvent)
+                } catch {
+                    print("Something")
+                }
+                
+            }
+        }
+    }
+
 }

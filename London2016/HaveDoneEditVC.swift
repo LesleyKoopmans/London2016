@@ -9,6 +9,7 @@
 import UIKit
 import Alamofire
 import AssetsLibrary
+import Photos
 
 class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate {
     
@@ -35,6 +36,7 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         locationField.delegate = self
         
         descriptionFieldInit()
+        setupAlertController()
         
         if itemToEdit != nil {
             loadItemData()
@@ -130,6 +132,10 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
                 post["location"] = locationField.text
             }
             
+            if dateTime != nil {
+                post["date"] = dateTime
+            }
+            
             let firebasePost = DataService.ds.REF_PICTURES.childByAutoId()
             firebasePost.setValue(post)
             
@@ -196,18 +202,17 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
             let metaData = info[UIImagePickerControllerMediaMetadata] as? NSDictionary
             
             if metaData != nil {
-                print(metaData)
                 let tiff = metaData!["{TIFF}"] as? NSDictionary
-                print(tiff)
                 if tiff != nil {
                     dateTime = tiff!["DateTime"] as? String
-                    print(dateTime)
                 }
             }
 
         } else if imagePicker.sourceType == .PhotoLibrary {
-            //Functie om metadata te genereren uit Photolibrary
+            
         }
+        
+        dismissViewControllerAnimated(true, completion: nil)
         
         imageView.image = img
         
@@ -217,7 +222,7 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         if let img = imageView.image {
             let urlStr = "https://post.imageshack.us/upload_api.php"
             let url = NSURL(string: urlStr)!
-            let imgData = UIImageJPEGRepresentation(img, 0.4)!
+            let imgData = UIImageJPEGRepresentation(img, 0.6)!
             let keyData = "389CIJPV7ede49f95a967a77e48a44c0aa697929".dataUsingEncoding(NSUTF8StringEncoding)!
             let keyJSON = "json".dataUsingEncoding(NSUTF8StringEncoding)!
             
