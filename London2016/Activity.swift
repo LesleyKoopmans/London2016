@@ -17,6 +17,7 @@ class Activity {
     private var _activityPrice: String?
     private var _activityUrl: String?
     private var _activityKey: String!
+    private var _eventId: String?
     private var _activityRef: Firebase!
     
     var activityName: String {
@@ -45,6 +46,10 @@ class Activity {
     
     var activityKey: String! {
         return _activityKey
+    }
+    
+    var eventId: String? {
+        return _eventId
     }
     
     init(name: String, image: String, description: String) {
@@ -78,6 +83,10 @@ class Activity {
         
         if let image = dictionary["imageUrl"] as? String {
             self._activityImage = image
+        }
+        
+        if let eventId = dictionary["eventId"] as? String {
+            self._eventId = eventId
         }
         
         self._activityRef = DataService.ds.REF_ACTIVITY.childByAppendingPath(self._activityKey)

@@ -25,6 +25,7 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
     var itemToEdit: Activity?
     let eventStore = EKEventStore()
     var calendarDate: NSDate?
+    var eventId: NSString?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,6 +105,7 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             postRef.observeSingleEventOfType(.Value, withBlock: { snapshot in
                 
                 postRef.removeValue()
+                self.deleteEvent(self.eventStore)
             self.navigationController?.popToViewController(self.navigationController!.viewControllers[1], animated: true)
                 
             })
@@ -140,10 +142,14 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
                 post["sortOrder"] = newDate
                 
                 insertEvent(eventStore)
+                
+                post["eventId"] = eventId
+                
             }
             
             if datePicker.text == "" {
                 post["sortOrder"] = "1231"
+                deleteEvent(eventStore)
             }
             
             print(datePicker.text)
@@ -178,6 +184,8 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
                 post["sortOrder"] = newDate
                 
                 insertEvent(eventStore)
+                
+                post["eventId"] = eventId
             }
             
             if datePicker.text == "" {
@@ -218,6 +226,8 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             if let url = item.activityUrl {
                 urlField.text = url
             }
+            
+            eventId = item.eventId
             
             var img: UIImage?
             
@@ -324,7 +334,7 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         let calendars = store.calendarsForEntityType(EKEntityType.Event) as [EKCalendar]
         
         for calendar in calendars {
-            if calendar.title == "London2016" {
+            if calendar.title == "Inge&Lesley" {
                 let endDate = calendarDate!.dateByAddingTimeInterval(1 * 60 * 60)
                 
                 let event = EKEvent(eventStore: store)
@@ -333,18 +343,42 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
                 if let title = titleField.text {
                     event.title = title
                 }
-//                event.title = "\(titleField.text)"
+                
+                if let notes = descriptionField.text {
+                    event.notes = notes
+                }
+                
                 event.startDate = calendarDate!
                 event.endDate = endDate
                 event.allDay = true
-                event.notes = "\(descriptionField.text)"
                 
                 do {
-                    let result = try store.saveEvent(event, span: EKSpan.ThisEvent)
+                    try store.saveEvent(event, span: .ThisEvent, commit: true)
+                    eventId = event.eventIdentifier
                 } catch {
-                    print("Something")
+                    print("Kan het evenement niet in iOS Calendar zetten")
                 }
                 
+            }
+        }
+    }
+    
+    func deleteEvent(store: EKEventStore) {
+        let calendars = store.calendarsForEntityType(EKEntityType.Event) as [EKCalendar]
+        
+        for calendar in calendars {
+            if calendar.title == "London2016" {
+                
+                if let id = eventId where id != "" {
+                    let event = store.eventWithIdentifier(eventId! as String)
+                    
+                    do {
+                        try eventStore.removeEvent(event!, span: EKSpan.ThisEvent)
+                    } catch {
+                        print("Kon evenement niet verwijderen van iOS Calendar")
+                    }
+                    
+                }
             }
         }
     }
