@@ -61,7 +61,8 @@ class HaveDoneVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func loadData() {
-        DataService.ds.REF_PICTURES.queryOrderedByChild("sortOrder").observeEventType(.Value, withBlock: { snapshot in
+        DataService.ds.REF_PICTURES.queryOrderedByChild("date").observeEventType(.Value, withBlock: { snapshot in
+
             self.posts = []
             
             if let snapshots = snapshot.children.allObjects as? [FDataSnapshot] {
@@ -73,7 +74,8 @@ class HaveDoneVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         let key = snap.key
                         
                         let post = Picture(postKey: key, dictionary: postDict)
-                        self.posts.append(post)
+                        self.posts.insert(post, atIndex: 0)
+                    
                     }
                     
                 }

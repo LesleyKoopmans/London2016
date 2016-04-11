@@ -204,20 +204,55 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
             if metaData != nil {
                 let tiff = metaData!["{TIFF}"] as? NSDictionary
                 if tiff != nil {
-                    dateTime = tiff!["DateTime"] as? String
+                    let date = tiff!["DateTime"] as? String
+                    
+                    if let time = date where time != "" {
+                        dateTime = changeDate(time)
+                    }
+                    
                 }
             }
 
         } else if imagePicker.sourceType == .PhotoLibrary {
+            let referenceUrl: NSURL = info[UIImagePickerControllerReferenceURL] as! NSURL
+            let result: PHFetchResult = PHAsset.fetchAssetsWithALAssetURLs([referenceUrl], options: nil)
+            
+            let img = info[UIImagePickerControllerOriginalImage] as! UIImage
+            let size = img.size
+            
+            let asset: PHAsset = result.firstObject as! PHAsset
+            
+            PHImageManager.defaultManager().requestImageForAsset(asset, targetSize: size, contentMode: .AspectFill, options: nil, resultHandler: { (img, info) -> Void in
+                
+                let dateFormatter = NSDateFormatter()
+                dateFormatter.dateFormat = "yyyyMMdd"
+                
+                if let nsDate = asset.creationDate where nsDate != "" {
+                    let date = dateFormatter.stringFromDate(nsDate)
+                    self.dateTime = date
+                }
+                
+            })
             
         }
         
         dismissViewControllerAnimated(true, completion: nil)
         
         imageView.image = img
-        
     }
     
+    func changeDate(string: String) -> String {
+        
+        print(string)
+        
+        let str = string.stringByReplacingOccurrencesOfString(":", withString: "")
+        let value = String(str.characters.dropLast(7))
+        
+        print(value)
+        
+        return value
+    }
+
     func uploadImage() {
         if let img = imageView.image {
             let urlStr = "https://post.imageshack.us/upload_api.php"

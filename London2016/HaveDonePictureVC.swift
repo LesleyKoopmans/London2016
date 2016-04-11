@@ -27,6 +27,7 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate {
         scrollView.delegate = self
         
         setZoomScale()
+        setupGestureRecognizer()
         
         loadItem()
         
@@ -46,8 +47,11 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate {
         
         let verticalPadding = imageViewSize.height < scrollViewSize.height ? (scrollViewSize.height - imageViewSize.height) / 2 : 0
         let horizontalPadding = imageViewSize.width < scrollViewSize.width ? (scrollViewSize.width - imageViewSize.width) / 2 : 0
+        
         scrollView.contentInset = UIEdgeInsets(top: verticalPadding, left: horizontalPadding, bottom: verticalPadding, right: horizontalPadding)
     }
+    
+    
     
     func setZoomScale() {
         let imageViewSize = imageView.bounds.size
@@ -55,9 +59,24 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate {
         let widthScale = scrollViewSize.width / imageViewSize.width
         let heightScale = scrollViewSize.height / imageViewSize.height
         
-        scrollView.minimumZoomScale = min (widthScale, heightScale)
+        scrollView.minimumZoomScale = min(widthScale, heightScale)
         scrollView.zoomScale = 1.0
     }
+    
+    func setupGestureRecognizer() {
+        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(HaveDonePictureVC.handleDoubleTap(_:)))
+        doubleTap.numberOfTapsRequired = 2
+        scrollView.addGestureRecognizer(doubleTap)
+    }
+    
+    func handleDoubleTap(recognizer: UITapGestureRecognizer) {
+        if (scrollView.zoomScale > scrollView.minimumZoomScale) {
+            scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
+        } else {
+            scrollView.setZoomScale(scrollView.maximumZoomScale, animated: true)
+        }
+    }
+    
     
     func loadItem() {
         var img: UIImage?
@@ -78,5 +97,7 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate {
         img = HaveDoneVC.imageCache.objectForKey(detailedPicture.pictureImage) as? UIImage
         
     }
+    
+    
     
 }

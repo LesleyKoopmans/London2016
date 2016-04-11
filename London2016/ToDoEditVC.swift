@@ -61,6 +61,25 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         datePickerView.datePickerMode = .Date
         sender.inputView = datePickerView
         datePickerView.addTarget(self, action: #selector(ToDoEditVC.datePickerValueChanged(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        
+        if let item = itemToEdit {
+            if let date = item.activityDate where date != "" {
+                let nsDate = changeDate(date)
+                datePickerView.date = nsDate
+            }
+        }
+        
+    }
+    
+    func changeDate(string: String) -> NSDate {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.locale = NSLocale(localeIdentifier: "fr_FR")
+        dateFormatter.timeStyle = .NoStyle
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        
+        let nsDate = dateFormatter.dateFromString(string)
+        
+        return nsDate!
     }
     
     func datePickerValueChanged(sender: UIDatePicker) {
@@ -217,6 +236,7 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             
             if let date = item.activityDate {
                 datePicker.text = date
+                datePicker.insertText(date)
             }
             
             if let price = item.activityPrice {
