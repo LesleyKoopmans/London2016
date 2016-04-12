@@ -12,6 +12,7 @@ import Firebase
 class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var collection: UICollectionView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     var activities = [Activity]()
     static var imageCache = NSCache()
@@ -43,7 +44,13 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             cell.configureCell(activity, img: img)
             cell.layer.cornerRadius = 5
             cell.layer.masksToBounds = true
+            
+            loadingIndicator.stopAnimating()
+            loadingIndicator.hidden = true
+            
             return cell
+            
+            
             
         } else {
             return UICollectionViewCell()
@@ -85,6 +92,9 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func loadData() {
+        
+        loadingIndicator.startAnimating()
+        
         DataService.ds.REF_ACTIVITY.queryOrderedByChild("sortOrder").observeEventType(.Value, withBlock: { snapshot in
             self.activities = []
             

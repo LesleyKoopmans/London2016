@@ -99,6 +99,11 @@
                             <tableView clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="250" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="OKQ-nF-224">
                                 <rect key="frame" x="16" y="84" width="288" height="464"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <activityIndicatorView key="tableFooterView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" id="tLC-1O-Od1">
+                                    <rect key="frame" x="0.0" y="278" width="288" height="37"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="color" red="0.0" green="0.56862745100000001" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                                </activityIndicatorView>
                                 <prototypes>
                                     <tableViewCell autoresizesSubviews="NO" clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="PictureCell" selectionStyle="none" indentationWidth="10" reuseIdentifier="PictureCell" rowHeight="250" id="h4o-fA-vpQ" customClass="PictureCell" customModule="London2016" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="288" height="250"/>
@@ -230,6 +235,7 @@
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
+                        <outlet property="loadingIndicator" destination="tLC-1O-Od1" id="4wX-y2-bhC"/>
                         <outlet property="tableView" destination="OKQ-nF-224" id="pKf-E8-gsM"/>
                         <segue destination="XWj-sZ-hwg" kind="show" identifier="HaveDoneDetailVC" id="Zb2-b2-X2G"/>
                     </connections>
@@ -575,6 +581,11 @@
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
+                                <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" id="VLG-BT-9XE">
+                                    <rect key="frame" x="126" y="213" width="37" height="37"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="color" red="0.0" green="0.56862745100000001" blue="0.54117647059999996" alpha="1" colorSpace="calibratedRGB"/>
+                                </activityIndicatorView>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" restorationIdentifier="ActivityCell" reuseIdentifier="ActivityCell" id="DRY-BI-u52" customClass="ActivityCell" customModule="London2016" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="135" height="120"/>
@@ -654,6 +665,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="collection" destination="xqF-Ve-uhb" id="el9-hY-Jpt"/>
+                        <outlet property="loadingIndicator" destination="VLG-BT-9XE" id="NfI-ty-92l"/>
                         <segue destination="hsn-qg-3Hy" kind="show" identifier="ToDoCreateVC" id="9K5-UX-8Or"/>
                         <segue destination="V6P-ra-FfZ" kind="show" identifier="ToDoDetailVC" id="T1R-5w-GEI"/>
                     </connections>
@@ -1083,7 +1095,7 @@
         <image name="placeholder" width="700" height="482"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="8S5-Td-c0x"/>
+        <segue reference="HP6-u5-Y74"/>
         <segue reference="9K5-UX-8Or"/>
     </inferredMetricsTieBreakers>
 </document>

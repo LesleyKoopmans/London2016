@@ -12,6 +12,7 @@ import Firebase
 class HaveDoneVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
     var posts = [Picture]()
     static var imageCache = NSCache()
@@ -38,6 +39,10 @@ class HaveDoneVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cell.configureCell(post, img: img)
             cell.cornerRadius = 5
             cell.clipsToBounds = true
+            
+            loadingIndicator.stopAnimating()
+            loadingIndicator.hidden = true
+            
             return cell
             
         } else {
@@ -61,6 +66,9 @@ class HaveDoneVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func loadData() {
+        
+        loadingIndicator.startAnimating()
+        
         DataService.ds.REF_PICTURES.queryOrderedByChild("date").observeEventType(.Value, withBlock: { snapshot in
 
             self.posts = []

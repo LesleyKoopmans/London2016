@@ -10,8 +10,9 @@ import UIKit
 import Alamofire
 import AssetsLibrary
 import Photos
+import CoreLocation
 
-class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate {
+class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, CLLocationManagerDelegate {
     
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var descriptionField: UITextView!
@@ -43,6 +44,7 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         }
         
     }
+    
     
     @IBAction func selectImage(sender: UITapGestureRecognizer) {
         presentViewController(alertController, animated: true, completion: nil)
@@ -212,6 +214,8 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
                     
                 }
             }
+            
+            print(metaData)
 
         } else if imagePicker.sourceType == .PhotoLibrary {
             let referenceUrl: NSURL = info[UIImagePickerControllerReferenceURL] as! NSURL
