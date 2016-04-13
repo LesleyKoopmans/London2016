@@ -80,6 +80,7 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         descriptionField.font = UIFont(name: "Verdana", size: 14.0)
         descriptionField.textAlignment = .Center
         descriptionField.editable = true
+        descriptionField.textContainer.maximumNumberOfLines = 2
     }
     
     override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -319,7 +320,7 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
                             
                         }
                         
-                    })
+                    }) 
                     
                 case .Failure(let error):
                     print(error)

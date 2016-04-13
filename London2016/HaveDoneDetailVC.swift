@@ -15,6 +15,7 @@ class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var descriptionLbl: UILabel!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var lineView: UIView!
     
     var post: Picture!
     var request: Request?
@@ -29,8 +30,7 @@ class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
         
         loadPost()
         createMap()
-        print(post.pictureLatitude)
-        print(post.pictureLongitude)
+        selectAnnotation()
         
     }
     
@@ -83,24 +83,51 @@ class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
         img = HaveDoneVC.imageCache.objectForKey(post.pictureImage) as? UIImage
     }
     
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        
+        if annotation.isKindOfClass(Annotations) {
+            let annoView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "Default")
+            annoView.pinTintColor = primaryColor
+            annoView.animatesDrop = true
+            
+            
+            return annoView
+        }
+        
+        return nil
+        
+    }
+    
     func createMap() {
         
         if let lat = post.pictureLatitude, lon = post.pictureLongitude {
+            
+            mapView.hidden = false
+            lineView.hidden = false
+            
             coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
             
-            let span = MKCoordinateSpanMake(0.1, 0.1)
+            let span = MKCoordinateSpanMake(0.01, 0.01)
             let region = MKCoordinateRegion(center: coordinate!, span: span)
             
             mapView.setRegion(region, animated: true)
             
+            let location = post.pictureLocation
             
-            let place = Annotations(coordinate: coordinate!)
+            let place = Annotations(coordinate: coordinate!, title: location)
             
             mapView.addAnnotation(place)
             
+        } else {
+            mapView.hidden = true
+            lineView.hidden = true
         }
         
-        
+    }
+    
+    func selectAnnotation() {
+        let place = Annotations(coordinate: coordinate!, title: self.post.pictureLocation)
+        mapView.selectAnnotation(place, animated: true)
     }
     
 }

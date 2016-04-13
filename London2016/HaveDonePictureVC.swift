@@ -26,7 +26,7 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate {
         scrollView.contentOffset = CGPoint(x: 1000, y: 450)
         scrollView.delegate = self
         
-        setZoomScale()
+        scrollViewDidZoom(scrollView)
         setupGestureRecognizer()
         
         loadItem()

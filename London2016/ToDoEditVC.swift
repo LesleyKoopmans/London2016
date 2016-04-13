@@ -281,6 +281,7 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         descriptionField.font = UIFont(name: "Verdana", size: 14.0)
         descriptionField.textAlignment = .Center
         descriptionField.editable = true
+        descriptionField.textContainer.maximumNumberOfLines = 2
     }
     
     func uploadImage() {

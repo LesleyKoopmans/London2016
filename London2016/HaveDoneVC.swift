@@ -20,6 +20,8 @@ class HaveDoneVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationItem.title = "Have Done"
+        
         tableView.delegate = self
         tableView.dataSource = self
         
