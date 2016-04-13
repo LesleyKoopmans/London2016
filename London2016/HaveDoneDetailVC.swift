@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import Alamofire
 
-class HaveDoneDetailVC: UIViewController {
+class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
     
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var descriptionLbl: UILabel!
@@ -18,11 +18,19 @@ class HaveDoneDetailVC: UIViewController {
     
     var post: Picture!
     var request: Request?
+    var coordinate: CLLocationCoordinate2D?
+    
+    let regionRadius: CLLocationDistance = 1000
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        mapView.delegate = self
+        
         loadPost()
+        createMap()
+        print(post.pictureLatitude)
+        print(post.pictureLongitude)
         
     }
     
@@ -74,4 +82,25 @@ class HaveDoneDetailVC: UIViewController {
         }
         img = HaveDoneVC.imageCache.objectForKey(post.pictureImage) as? UIImage
     }
+    
+    func createMap() {
+        
+        if let lat = post.pictureLatitude, lon = post.pictureLongitude {
+            coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            
+            let span = MKCoordinateSpanMake(0.1, 0.1)
+            let region = MKCoordinateRegion(center: coordinate!, span: span)
+            
+            mapView.setRegion(region, animated: true)
+            
+            
+            let place = Annotations(coordinate: coordinate!)
+            
+            mapView.addAnnotation(place)
+            
+        }
+        
+        
+    }
+    
 }

@@ -24,6 +24,8 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     var itemToEdit: Picture?
     var alertController = UIAlertController()
     var dateTime: String?
+    var latitude: Double?
+    var longitude: Double?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -121,6 +123,14 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
                 post["date"] = dateTime
             }
             
+            if longitude != nil {
+                post["longitude"] = longitude
+            }
+            
+            if latitude != nil {
+                post["latitude"] = latitude
+            }
+            
             postRef.updateChildValues(post)
             
         } else {
@@ -136,6 +146,14 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
             
             if dateTime != nil {
                 post["date"] = dateTime
+            }
+            
+            if longitude != nil {
+                post["longitude"] = longitude
+            }
+            
+            if latitude != nil {
+                post["latitude"] = latitude
             }
             
             let firebasePost = DataService.ds.REF_PICTURES.childByAutoId()
@@ -205,6 +223,7 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
             
             if metaData != nil {
                 let tiff = metaData!["{TIFF}"] as? NSDictionary
+                
                 if tiff != nil {
                     let date = tiff!["DateTime"] as? String
                     
@@ -214,8 +233,6 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
                     
                 }
             }
-            
-            print(metaData)
 
         } else if imagePicker.sourceType == .PhotoLibrary {
             let referenceUrl: NSURL = info[UIImagePickerControllerReferenceURL] as! NSURL
@@ -235,6 +252,20 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
                     let date = dateFormatter.stringFromDate(nsDate)
                     self.dateTime = date
                 }
+                
+                if let position = asset.location where position != "" {
+                    let coordinate = position.coordinate
+                    
+                    let lat = coordinate.latitude
+                    self.latitude = lat
+                    let lon = coordinate.longitude
+                    self.longitude = lon
+                    
+                } else {
+                    print("No Location")
+                }
+                
+                
                 
             })
             

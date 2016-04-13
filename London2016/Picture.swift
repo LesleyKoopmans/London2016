@@ -14,6 +14,8 @@ class Picture {
     private var _pictureDescription: String!
     private var _pictureImage: String!
     private var _pictureLocation: String?
+    private var _pictureLatitude: Double?
+    private var _pictureLongitude: Double?
     private var _pictureKey: String!
     private var _pictureRef: Firebase!
     
@@ -31,6 +33,14 @@ class Picture {
     
     var pictureLocation: String? {
         return _pictureLocation
+    }
+    
+    var pictureLatitude: Double? {
+        return _pictureLatitude
+    }
+    
+    var pictureLongitude: Double? {
+        return _pictureLongitude
     }
     
     var pictureKey: String {
@@ -60,6 +70,18 @@ class Picture {
         
         if let imageUrl = dictionary["imageUrl"] as? String {
             self._pictureImage = imageUrl
+        }
+        
+        if let location = dictionary["location"] as? String {
+            self._pictureLocation = location
+        }
+        
+        if let latitude = dictionary["latitude"] as? Double {
+            self._pictureLatitude = latitude
+        }
+        
+        if let longitude = dictionary["longitude"] as? Double {
+            self._pictureLongitude = longitude
         }
         
         self._pictureRef = DataService.ds.REF_PICTURES.childByAppendingPath(self._pictureKey)
