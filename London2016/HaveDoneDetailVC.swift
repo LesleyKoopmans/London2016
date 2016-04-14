@@ -126,8 +126,13 @@ class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
     }
     
     func selectAnnotation() {
-        let place = Annotations(coordinate: coordinate!, title: self.post.pictureLocation)
-        mapView.selectAnnotation(place, animated: true)
+        if let lat = post.pictureLatitude, lon = post.pictureLongitude {
+            
+            coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            
+            let place = Annotations(coordinate: coordinate!, title: self.post.pictureLocation)
+            mapView.selectAnnotation(place, animated: true)
+        }
     }
     
 }
