@@ -356,28 +356,30 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         
         for calendar in calendars {
             if calendar.title == "Inge&Lesley" {
-                let endDate = calendarDate!.dateByAddingTimeInterval(1 * 60 * 60)
-                
-                let event = EKEvent(eventStore: store)
-                event.calendar = calendar
-                
-                if let title = titleField.text {
-                    event.title = title
-                }
-                
-                if let notes = descriptionField.text {
-                    event.notes = notes
-                }
-                
-                event.startDate = calendarDate!
-                event.endDate = endDate
-                event.allDay = true
-                
-                do {
-                    try store.saveEvent(event, span: .ThisEvent, commit: true)
-                    eventId = event.eventIdentifier
-                } catch {
-                    print("Kan het evenement niet in iOS Calendar zetten")
+                if calendarDate != nil {
+                    let endDate = calendarDate!.dateByAddingTimeInterval(1 * 60 * 60)
+                    
+                    let event = EKEvent(eventStore: store)
+                    event.calendar = calendar
+                    
+                    if let title = titleField.text {
+                        event.title = title
+                    }
+                    
+                    if let notes = descriptionField.text {
+                        event.notes = notes
+                    }
+                    
+                    event.startDate = calendarDate!
+                    event.endDate = endDate
+                    event.allDay = true
+                    
+                    do {
+                        try store.saveEvent(event, span: .ThisEvent, commit: true)
+                        eventId = event.eventIdentifier
+                    } catch {
+                        print("Kan het evenement niet in iOS Calendar zetten")
+                    }
                 }
                 
             }

@@ -90,8 +90,8 @@ class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
             annoView.pinTintColor = primaryColor
             annoView.animatesDrop = true
             
-            
             return annoView
+            
         }
         
         return nil

@@ -9,10 +9,20 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>LondonToday.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>67232B9E1C973B2B0006540A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>67CE03E41CC12CD80074CF51</key>
 		<dict>
 			<key>primary</key>
 			<true/>

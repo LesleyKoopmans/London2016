@@ -28,8 +28,36 @@
 		67238F901CB2DEBB00C36898 /* CONSTANTS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67238F8F1CB2DEBB00C36898 /* CONSTANTS.swift */; };
 		67238F921CB3FD3D00C36898 /* HaveDonePictureVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67238F911CB3FD3D00C36898 /* HaveDonePictureVC.swift */; };
 		67CE03E01CBE8C530074CF51 /* Annotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67CE03DF1CBE8C4F0074CF51 /* Annotations.swift */; };
+		67CE03E71CC12CD90074CF51 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67CE03E61CC12CD90074CF51 /* NotificationCenter.framework */; };
+		67CE03EA1CC12CDB0074CF51 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67CE03E91CC12CDB0074CF51 /* TodayViewController.swift */; };
+		67CE03ED1CC12CDB0074CF51 /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 67CE03EB1CC12CDB0074CF51 /* MainInterface.storyboard */; };
+		67CE03F11CC12CDB0074CF51 /* LondonToday.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 67CE03E51CC12CD80074CF51 /* LondonToday.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D9A395A9DC8B9E8127091628 /* Pods_London2016.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24B77B716B1E06EA0CCD813 /* Pods_London2016.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		67CE03EF1CC12CDB0074CF51 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 67232B971C973B2B0006540A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 67CE03E41CC12CD80074CF51;
+			remoteInfo = LondonToday;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		67CE03F51CC12CDB0074CF51 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				67CE03F11CC12CDB0074CF51 /* LondonToday.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		34E8ED9DE84D97CB107CA104 /* Pods-London2016.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-London2016.release.xcconfig"; path = "Pods/Target Support Files/Pods-London2016/Pods-London2016.release.xcconfig"; sourceTree = "<group>"; };
@@ -56,6 +84,11 @@
 		67238F8F1CB2DEBB00C36898 /* CONSTANTS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CONSTANTS.swift; sourceTree = "<group>"; };
 		67238F911CB3FD3D00C36898 /* HaveDonePictureVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HaveDonePictureVC.swift; sourceTree = "<group>"; };
 		67CE03DF1CBE8C4F0074CF51 /* Annotations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Annotations.swift; sourceTree = "<group>"; };
+		67CE03E51CC12CD80074CF51 /* LondonToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LondonToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		67CE03E61CC12CD90074CF51 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		67CE03E91CC12CDB0074CF51 /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		67CE03EC1CC12CDB0074CF51 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
+		67CE03EE1CC12CDB0074CF51 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		92E417D97619AC9DADD7AC26 /* Pods-London2016.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-London2016.debug.xcconfig"; path = "Pods/Target Support Files/Pods-London2016/Pods-London2016.debug.xcconfig"; sourceTree = "<group>"; };
 		D24B77B716B1E06EA0CCD813 /* Pods_London2016.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_London2016.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -69,6 +102,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		67CE03E21CC12CD80074CF51 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				67CE03E71CC12CD90074CF51 /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -76,6 +117,7 @@
 			isa = PBXGroup;
 			children = (
 				67232BA11C973B2B0006540A /* London2016 */,
+				67CE03E81CC12CDA0074CF51 /* LondonToday */,
 				67232BA01C973B2B0006540A /* Products */,
 				680E95D40D813BC1001D6607 /* Pods */,
 				FEFDADF99756927F50CBBFFF /* Frameworks */,
@@ -86,6 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				67232B9F1C973B2B0006540A /* London2016.app */,
+				67CE03E51CC12CD80074CF51 /* LondonToday.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -151,6 +194,16 @@
 			name = Services;
 			sourceTree = "<group>";
 		};
+		67CE03E81CC12CDA0074CF51 /* LondonToday */ = {
+			isa = PBXGroup;
+			children = (
+				67CE03E91CC12CDB0074CF51 /* TodayViewController.swift */,
+				67CE03EB1CC12CDB0074CF51 /* MainInterface.storyboard */,
+				67CE03EE1CC12CDB0074CF51 /* Info.plist */,
+			);
+			path = LondonToday;
+			sourceTree = "<group>";
+		};
 		680E95D40D813BC1001D6607 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -164,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				D24B77B716B1E06EA0CCD813 /* Pods_London2016.framework */,
+				67CE03E61CC12CD90074CF51 /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -181,15 +235,34 @@
 				67232B9D1C973B2B0006540A /* Resources */,
 				F84697DBF37E01CB97BF13DD /* Embed Pods Frameworks */,
 				05137FB57BBFD2D8E7919C78 /* Copy Pods Resources */,
+				67CE03F51CC12CDB0074CF51 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				67CE03F01CC12CDB0074CF51 /* PBXTargetDependency */,
 			);
 			name = London2016;
 			productName = London2016;
 			productReference = 67232B9F1C973B2B0006540A /* London2016.app */;
 			productType = "com.apple.product-type.application";
+		};
+		67CE03E41CC12CD80074CF51 /* LondonToday */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 67CE03F21CC12CDB0074CF51 /* Build configuration list for PBXNativeTarget "LondonToday" */;
+			buildPhases = (
+				67CE03E11CC12CD80074CF51 /* Sources */,
+				67CE03E21CC12CD80074CF51 /* Frameworks */,
+				67CE03E31CC12CD80074CF51 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LondonToday;
+			productName = LondonToday;
+			productReference = 67CE03E51CC12CD80074CF51 /* LondonToday.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -197,12 +270,16 @@
 		67232B971C973B2B0006540A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0730;
 				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = Lesley;
 				TargetAttributes = {
 					67232B9E1C973B2B0006540A = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = SN6U85AYBY;
+					};
+					67CE03E41CC12CD80074CF51 = {
+						CreatedOnToolsVersion = 7.3;
 						DevelopmentTeam = SN6U85AYBY;
 					};
 				};
@@ -221,6 +298,7 @@
 			projectRoot = "";
 			targets = (
 				67232B9E1C973B2B0006540A /* London2016 */,
+				67CE03E41CC12CD80074CF51 /* LondonToday */,
 			);
 		};
 /* End PBXProject section */
@@ -233,6 +311,14 @@
 				67232BB01C973B2C0006540A /* LaunchScreen.storyboard in Resources */,
 				67232BAD1C973B2C0006540A /* Assets.xcassets in Resources */,
 				67232BA81C973B2C0006540A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		67CE03E31CC12CD80074CF51 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				67CE03ED1CC12CDB0074CF51 /* MainInterface.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -312,7 +398,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		67CE03E11CC12CD80074CF51 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				67CE03EA1CC12CDB0074CF51 /* TodayViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		67CE03F01CC12CDB0074CF51 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 67CE03E41CC12CD80074CF51 /* LondonToday */;
+			targetProxy = 67CE03EF1CC12CDB0074CF51 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		67232BA61C973B2C0006540A /* Main.storyboard */ = {
@@ -329,6 +431,14 @@
 				67232BAF1C973B2C0006540A /* Base */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		67CE03EB1CC12CDB0074CF51 /* MainInterface.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				67CE03EC1CC12CDB0074CF51 /* Base */,
+			);
+			name = MainInterface.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -422,6 +532,7 @@
 			baseConfigurationReference = 92E417D97619AC9DADD7AC26 /* Pods-London2016.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = London2016/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = beer.atmos.London2016;
@@ -434,10 +545,37 @@
 			baseConfigurationReference = 34E8ED9DE84D97CB107CA104 /* Pods-London2016.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				INFOPLIST_FILE = London2016/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = beer.atmos.London2016;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		67CE03F31CC12CDB0074CF51 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				INFOPLIST_FILE = LondonToday/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = beer.atmos.London2016.LondonToday;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		67CE03F41CC12CDB0074CF51 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				INFOPLIST_FILE = LondonToday/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = beer.atmos.London2016.LondonToday;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
@@ -461,6 +599,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		67CE03F21CC12CDB0074CF51 /* Build configuration list for PBXNativeTarget "LondonToday" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				67CE03F31CC12CDB0074CF51 /* Debug */,
+				67CE03F41CC12CDB0074CF51 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 

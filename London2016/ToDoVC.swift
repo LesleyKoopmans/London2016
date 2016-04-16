@@ -35,7 +35,7 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             
             cell.request?.cancel()
             
-            var img: UIImage?
+            var img = UIImage(named: "placeholder")
             
             if let url = activity.activityImage {
                 img = ToDoVC.imageCache.objectForKey(url) as? UIImage

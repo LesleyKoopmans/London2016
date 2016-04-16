@@ -35,8 +35,10 @@ class HaveDoneVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         if let cell = tableView.dequeueReusableCellWithIdentifier("PictureCell", forIndexPath: indexPath) as? PictureCell {
             
             cell.request?.cancel()
+            var img = UIImage(named: "placeholder")
             
-            let img = HaveDoneVC.imageCache.objectForKey(post.pictureImage) as? UIImage
+            img = HaveDoneVC.imageCache.objectForKey(post.pictureImage) as? UIImage
+            
             
             cell.configureCell(post, img: img)
             cell.cornerRadius = 5

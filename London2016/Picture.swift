@@ -85,6 +85,6 @@ class Picture {
         }
         
         self._pictureRef = DataService.ds.REF_PICTURES.childByAppendingPath(self._pictureKey)
-        
+    
     }
 }
