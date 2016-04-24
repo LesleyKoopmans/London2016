@@ -44,7 +44,6 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         if itemToEdit != nil {
             loadItemData()
         }
-        
     }
     
     
@@ -53,9 +52,7 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     @IBAction func addBtnTapped() {
-        
         uploadImage()
-        
         self.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -159,13 +156,11 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
             
             let firebasePost = DataService.ds.REF_PICTURES.childByAutoId()
             firebasePost.setValue(post)
-            
         }
         
         titleField.text = ""
         descriptionField.text = ""
         imageView.image = UIImage(named: "placeholder")
-
     }
     
     func loadItemData() {
@@ -179,11 +174,8 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
             }
             
             imageView.image = HaveDoneVC.imageCache.objectForKey(item.pictureImage) as? UIImage
-            
         }
-        
         urlBtn.setTitle("Wijzig", forState: .Normal)
-        
     }
     
     func setupAlertController() {
@@ -207,7 +199,6 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
     func photoFromCamera() {
         imagePicker.sourceType = .Camera
         presentViewController(imagePicker, animated: true, completion: nil)
-        
     }
     
     func photoFromImageGallery() {
@@ -231,7 +222,6 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
                     if let time = date where time != "" {
                         dateTime = changeDate(time)
                     }
-                    
                 }
             }
 
@@ -265,11 +255,7 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
                 } else {
                     print("No Location")
                 }
-                
-                
-                
             })
-            
         }
         
         dismissViewControllerAnimated(true, completion: nil)
@@ -315,11 +301,16 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
                                 if let imgLink = links["image_link"] as? String {
                                     self.postToFirebase(imgLink)
                                 }
-                                
                             }
                             
+                        } else {
+                            self.alertController = UIAlertController(title: "Mislukt", message: "Die verdomde error die ik nog niet kan verhelpen!", preferredStyle: .Alert)
+                            let cancelAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                            self.alertController.addAction(cancelAction)
+                            dispatch_async(dispatch_get_main_queue(), {
+                                self.presentViewController(self.alertController, animated: true, completion: nil)
+                                })
                         }
-                        
                     }) 
                     
                 case .Failure(let error):
@@ -330,7 +321,5 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         } else {
             print("Upload zonder foto")
         }
-
     }
-    
 }

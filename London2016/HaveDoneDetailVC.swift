@@ -30,8 +30,6 @@ class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
         
         loadPost()
         createMap()
-        selectAnnotation()
-        
     }
     
     @IBAction func pictureTapped(sender: UITapGestureRecognizer) {
@@ -66,7 +64,6 @@ class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
         
         var img: UIImage?
         
-
         if img != nil {
             self.postImage.image = img
         } else {
@@ -78,7 +75,6 @@ class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
                         HaveDoneVC.imageCache.setObject(img, forKey: self.post.pictureImage)
                     }
             })
-                
         }
         img = HaveDoneVC.imageCache.objectForKey(post.pictureImage) as? UIImage
     }
@@ -91,17 +87,13 @@ class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
             annoView.animatesDrop = true
             
             return annoView
-            
         }
-        
         return nil
-        
     }
     
     func createMap() {
         
         if let lat = post.pictureLatitude, lon = post.pictureLongitude {
-            
             mapView.hidden = false
             lineView.hidden = false
             
@@ -117,22 +109,11 @@ class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
             let place = Annotations(coordinate: coordinate!, title: location)
             
             mapView.addAnnotation(place)
+            mapView.selectAnnotation(place, animated: true)
             
         } else {
             mapView.hidden = true
             lineView.hidden = true
         }
-        
     }
-    
-    func selectAnnotation() {
-        if let lat = post.pictureLatitude, lon = post.pictureLongitude {
-            
-            coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-            
-            let place = Annotations(coordinate: coordinate!, title: self.post.pictureLocation)
-            mapView.selectAnnotation(place, animated: true)
-        }
-    }
-    
 }

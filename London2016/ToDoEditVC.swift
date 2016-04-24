@@ -171,8 +171,6 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
                 deleteEvent(eventStore)
             }
             
-            print(datePicker.text)
-            
             if priceField.text != nil {
                 post["price"] = priceField.text
             }
@@ -180,7 +178,6 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             if urlField.text != nil {
                 post["url"] = urlField.text
             }
-
             
             postRef.updateChildValues(post)
             
@@ -190,8 +187,6 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
                 "description": descriptionField.text!,
                 "imageUrl": imgUrl
             ]
-            
-            print(datePicker.text)
             
             if datePicker.text != nil {
                 post["date"] = datePicker.text
@@ -218,8 +213,10 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
             if urlField.text != nil {
                 post["url"] = urlField.text
             }
+    
             
             let firebasePost = DataService.ds.REF_ACTIVITY.childByAutoId()
+            
             firebasePost.setValue(post)
         }
         
@@ -310,15 +307,16 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
                                 if let imgLink = links["image_link"] as? String {
                                     self.postToFirebase(imgLink)
                                 }
-                                
                             }
-                            
                         }
-                        
                     })
                     
                 case .Failure(let error):
                     print(error)
+                    let alertController = UIAlertController(title: "Mislukt", message: "Die verdomde error die ik nog niet kan verhelpen!", preferredStyle: .Alert)
+                    let cancelAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                    alertController.addAction(cancelAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
                 }
             }
             
@@ -332,12 +330,8 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
         
         switch EKEventStore.authorizationStatusForEntityType(EKEntityType.Event) {
         
-        case .Authorized:
-            print("Agenda toegestaan")
-        
-        case .Denied:
-            print("Access denied")
-            
+        case .Authorized: break
+        case .Denied: break
         case .NotDetermined:
             eventStore.requestAccessToEntityType(.Event, completion: { (granted: Bool, error: NSError?) -> Void in
                 if granted {
@@ -346,8 +340,7 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
                     print("Access Denied")
                 }
             })
-        default:
-            print("Case Default")
+        default: break
         }
     }
     
@@ -381,7 +374,6 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
                         print("Kan het evenement niet in iOS Calendar zetten")
                     }
                 }
-                
             }
         }
     }
@@ -400,10 +392,8 @@ class ToDoEditVC: UIViewController, UIImagePickerControllerDelegate, UINavigatio
                     } catch {
                         print("Kon evenement niet verwijderen van iOS Calendar")
                     }
-                    
                 }
             }
         }
     }
-
 }

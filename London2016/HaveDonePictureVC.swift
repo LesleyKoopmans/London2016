@@ -30,7 +30,6 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate {
         setupGestureRecognizer()
         
         loadItem()
-        
     }
     
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
@@ -50,8 +49,6 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate {
         
         scrollView.contentInset = UIEdgeInsets(top: verticalPadding, left: horizontalPadding, bottom: verticalPadding, right: horizontalPadding)
     }
-    
-    
     
     func setZoomScale() {
         let imageViewSize = imageView.bounds.size
@@ -77,7 +74,6 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    
     func loadItem() {
         var img: UIImage?
         
@@ -92,12 +88,7 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate {
                     HaveDoneVC.imageCache.setObject(img, forKey: self.detailedPicture.pictureImage)
                 }
             })
-            
         }
         img = HaveDoneVC.imageCache.objectForKey(detailedPicture.pictureImage) as? UIImage
-        
     }
-    
-    
-    
 }

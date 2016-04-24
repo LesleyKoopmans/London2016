@@ -16,6 +16,9 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
     
     var activities = [Activity]()
     static var imageCache = NSCache()
+    var keys = [String]()
+    var dates = [String]()
+    var dictionary = [String:String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +26,12 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         collection.dataSource = self
         self.navigationItem.title = "TO DO"
         
-        loadData()
+        loadData { (succes) -> Void in
+            if succes {
+                self.deleteActivity()
+                self.createLocalNotification()
+            }
+        }
         
     }
     
@@ -49,8 +57,6 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             loadingIndicator.hidden = true
             
             return cell
-            
-            
             
         } else {
             return UICollectionViewCell()
@@ -91,10 +97,10 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
-    func loadData() {
-        
+    func loadData(completionHandler: (succes: Bool) -> Void) {
+
         loadingIndicator.startAnimating()
-        
+        completionHandler(succes: false)
         DataService.ds.REF_ACTIVITY.queryOrderedByChild("sortOrder").observeEventType(.Value, withBlock: { snapshot in
             self.activities = []
             
@@ -108,6 +114,16 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
                         
                         let activity = Activity(activityKey: key, dictionary: postDict)
                         self.activities.append(activity)
+                        
+                        if let date = postDict["date"] {
+                            self.keys.append(key)
+                            self.dates.append(date as! String)
+                            
+                            for(index, element) in self.keys.enumerate() {
+                                self.dictionary[element] = self.dates[index]
+                            }
+                            completionHandler(succes: true)
+                        }
                     }
                     
                 }
@@ -118,4 +134,87 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         })
     }
     
+    func deleteActivity() {
+        let currentDate = NSDate()
+        for item in dictionary {
+            let date = item.1
+            let formatter = NSDateFormatter()
+            formatter.dateFormat = "dd/MM/yyyy"
+            if var nsDate = formatter.dateFromString(date) {
+                nsDate = nsDate.dateByAddingTimeInterval(60*60*24*1)
+                switch currentDate.compare(nsDate) {
+                case .OrderedDescending:
+                    
+                    let fireDate = nsDate.dateByAddingTimeInterval(60*60*1)
+                    
+                    DataService.ds.REF_ACTIVITY.childByAppendingPath(item.0).observeEventType(.Value, withBlock: { snapshot in
+                        if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
+                            let title = postDict["name"] as! String
+                            
+                            let notification = UILocalNotification()
+                            notification.alertTitle = "Foto plaastsen?"
+                            notification.alertBody = "Was het leuk bij \(title)? Plaats anders even een foto!"
+                            notification.fireDate = fireDate
+                            UIApplication.sharedApplication().scheduleLocalNotification(notification)
+                            
+                        }
+                    })
+                    
+                    let postRef = DataService.ds.REF_ACTIVITY.childByAppendingPath(item.0)
+                    postRef.observeSingleEventOfType(.Value, withBlock: { snapshot in
+                        postRef.removeValue()
+                    })
+                    break
+                case .OrderedSame: break
+                default: break
+                }
+                
+            }
+            
+        }
+    }
+    
+    func createLocalNotification() {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        let currentDate = NSDate()
+        let now = dateFormatter.stringFromDate(currentDate)
+        
+        for item in dictionary {
+            let date = item.1
+            
+            if now == date {
+                
+                if let nsDate = dateFormatter.dateFromString(date) {
+                    let fireDate = nsDate.dateByAddingTimeInterval(60*60*15)
+                    let currentDate = NSDate()
+                    
+                    DataService.ds.REF_ACTIVITY.childByAppendingPath(item.0).observeEventType(.Value, withBlock: { snapshot in
+                        if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
+                            let title = postDict["name"] as! String
+                            
+                            switch currentDate.compare(nsDate) {
+                            case .OrderedDescending:
+                                print("Currentdate is later")
+                            case .OrderedSame:
+                                self.fireNotification(title, fireDate: fireDate)
+                            case .OrderedAscending:
+                                self.fireNotification(title, fireDate: fireDate)
+                            }
+                            
+                            
+                        }
+                    })
+                }
+            }
+        }
+    }
+    
+    func fireNotification(activityTitle: String, fireDate: NSDate) {
+        let notification = UILocalNotification()
+        notification.alertTitle = "Yeah! Feestje!"
+        notification.alertBody = "Veel plezier vandaag bij \(activityTitle)"
+        notification.fireDate = fireDate
+        UIApplication.sharedApplication().scheduleLocalNotification(notification)
+    }
 }

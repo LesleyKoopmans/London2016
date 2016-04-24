@@ -29,9 +29,7 @@ class ToDoDetailVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         loadData()
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -75,7 +73,7 @@ class ToDoDetailVC: UIViewController {
                 }
                 
                 if let price = postDict["price"] {
-                    self.priceLbl.text = price as? String
+                    self.priceLbl.text = "£\(price) p.p"
                 } else {
                     self.priceStackView.hidden = true
                     self.parentStackView.distribution = .Fill
@@ -128,7 +126,8 @@ class ToDoDetailVC: UIViewController {
         }
         
         if let price = activity.activityPrice where price != "" {
-            priceLbl.text = "€\(price) p.p."
+            priceLbl.text = "£\(price) p.p"
+
         } else {
             priceStackView.hidden = true
             parentStackView.distribution = .Fill
@@ -140,7 +139,6 @@ class ToDoDetailVC: UIViewController {
             if img != nil {
                 self.activityImage.image = img
             } else {
-                
                 request = Alamofire.request(.GET, activity.activityImage!).validate(contentType: ["image/*"]).response(completionHandler: { request, response, data, error in
                     if error == nil {
                         let img = UIImage(data: data!)!
@@ -149,7 +147,6 @@ class ToDoDetailVC: UIViewController {
                         ToDoVC.imageCache.setObject(img, forKey: self.activity.activityImage!)
                     }
                 })
-                
             }
             img = ToDoVC.imageCache.objectForKey(url) as? UIImage
         }

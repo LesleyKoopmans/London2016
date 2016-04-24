@@ -26,7 +26,6 @@ class HaveDoneVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableView.dataSource = self
         
         loadData()
-        
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -52,7 +51,6 @@ class HaveDoneVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         } else {
             return UITableViewCell()
         }
-        
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -87,13 +85,9 @@ class HaveDoneVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                         
                         let post = Picture(postKey: key, dictionary: postDict)
                         self.posts.insert(post, atIndex: 0)
-                    
                     }
-                    
                 }
-                
             }
-            
             self.tableView.reloadData()
         })
     }
@@ -111,5 +105,4 @@ class HaveDoneVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
-    
 }
