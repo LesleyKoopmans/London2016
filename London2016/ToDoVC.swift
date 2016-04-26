@@ -32,7 +32,6 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
                 self.createLocalNotification()
             }
         }
-        
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -122,14 +121,14 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
                             for(index, element) in self.keys.enumerate() {
                                 self.dictionary[element] = self.dates[index]
                             }
-                            completionHandler(succes: true)
+                            
                         }
                     }
                     
                 }
                 
             }
-            
+            completionHandler(succes: true)
             self.collection.reloadData()
         })
     }
@@ -142,21 +141,18 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             formatter.dateFormat = "dd/MM/yyyy"
             if var nsDate = formatter.dateFromString(date) {
                 nsDate = nsDate.dateByAddingTimeInterval(60*60*24*1)
+
                 switch currentDate.compare(nsDate) {
                 case .OrderedDescending:
-                    
-                    let fireDate = nsDate.dateByAddingTimeInterval(60*60*1)
-                    
+
+                    let fireDate = nsDate.dateByAddingTimeInterval(60*60*22)
                     DataService.ds.REF_ACTIVITY.childByAppendingPath(item.0).observeEventType(.Value, withBlock: { snapshot in
                         if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
-                            let title = postDict["name"] as! String
-                            
-                            let notification = UILocalNotification()
-                            notification.alertTitle = "Foto plaastsen?"
-                            notification.alertBody = "Was het leuk bij \(title)? Plaats anders even een foto!"
-                            notification.fireDate = fireDate
-                            UIApplication.sharedApplication().scheduleLocalNotification(notification)
-                            
+                            let activityTitle = postDict["name"] as! String
+
+                            let title = "Foto plaatsen?"
+                            let body = "Was het leuk bij \(activityTitle)? Plaats anders even een foto!"
+                            self.fireNotification(title, alertBody: body, fireDate: fireDate)
                         }
                     })
                     
@@ -184,25 +180,26 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
             let date = item.1
             
             if now == date {
-                
-                if let nsDate = dateFormatter.dateFromString(date) {
-                    let fireDate = nsDate.dateByAddingTimeInterval(60*60*15)
+                if let nsDate = dateFormatter.dateFromString(date)?.dateByAddingTimeInterval(60*60*16) {
+                    let fireDate = nsDate.dateByAddingTimeInterval(60*60*1)
                     let currentDate = NSDate()
                     
                     DataService.ds.REF_ACTIVITY.childByAppendingPath(item.0).observeEventType(.Value, withBlock: { snapshot in
                         if let postDict = snapshot.value as? Dictionary<String, AnyObject> {
-                            let title = postDict["name"] as! String
+                            let activityTitle = postDict["name"] as! String
                             
                             switch currentDate.compare(nsDate) {
                             case .OrderedDescending:
-                                print("Currentdate is later")
+                                print("Het is al te laat voor de notificatie!")
                             case .OrderedSame:
-                                self.fireNotification(title, fireDate: fireDate)
+                                let title = "Yeah! Feestje!"
+                                let body = "Veel plezier vandaag bij \(activityTitle)"
+                                self.fireNotification(title, alertBody: body, fireDate: fireDate)
                             case .OrderedAscending:
-                                self.fireNotification(title, fireDate: fireDate)
+                                let title = "Yeah! Feestje!"
+                                let body = "Veel plezier vandaag bij \(activityTitle)"
+                                self.fireNotification(title, alertBody: body, fireDate: fireDate)
                             }
-                            
-                            
                         }
                     })
                 }
@@ -210,10 +207,10 @@ class ToDoVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSo
         }
     }
     
-    func fireNotification(activityTitle: String, fireDate: NSDate) {
+    func fireNotification(alertTitle: String, alertBody: String, fireDate: NSDate) {
         let notification = UILocalNotification()
-        notification.alertTitle = "Yeah! Feestje!"
-        notification.alertBody = "Veel plezier vandaag bij \(activityTitle)"
+        notification.alertTitle = alertTitle
+        notification.alertBody = alertBody
         notification.fireDate = fireDate
         UIApplication.sharedApplication().scheduleLocalNotification(notification)
     }

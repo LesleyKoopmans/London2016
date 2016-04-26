@@ -13,6 +13,8 @@ class MainVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "LONDON2016"
+        
+        print(UIApplication.sharedApplication().scheduledLocalNotifications)
     }
     
     @IBAction func toDoBtnTapped() {
