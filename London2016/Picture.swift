@@ -13,6 +13,7 @@ class Picture {
     private var _pictureName: String!
     private var _pictureDescription: String!
     private var _pictureImage: String!
+    private var _pictureDict = Dictionary<String, AnyObject>()
     private var _pictureLocation: String?
     private var _pictureLatitude: Double?
     private var _pictureLongitude: Double?
@@ -29,6 +30,10 @@ class Picture {
     
     var pictureImage: String {
         return _pictureImage
+    }
+    
+    var pictureDict: Dictionary<String, AnyObject>? {
+        return _pictureDict
     }
     
     var pictureLocation: String? {
@@ -68,8 +73,15 @@ class Picture {
             self._pictureDescription = description
         }
         
-        if let imageUrl = dictionary["imageUrl"] as? String {
-            self._pictureImage = imageUrl
+        if let imageDict = dictionary["images"] as? Dictionary<String, AnyObject> {
+            if let imageUrl = imageDict["image1"] as? String {
+                self._pictureImage = imageUrl
+            }
+            
+            for item in imageDict {
+                self._pictureDict.updateValue(item.0, forKey: item.1 as! String)
+            }
+            
         }
         
         if let location = dictionary["location"] as? String {

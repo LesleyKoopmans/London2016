@@ -110,7 +110,9 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
             var post: Dictionary<String, AnyObject> = [
                 "name": titleField.text!,
                 "description": descriptionField.text!,
-                "imageUrl": imgUrl
+                "images": [
+                    "image1": imgUrl
+                ]
             ]
             
             if locationField.text != nil {
@@ -135,7 +137,9 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
             var post: Dictionary<String, AnyObject> = [
                 "name": titleField.text!,
                 "description": descriptionField.text!,
-                "imageUrl": imgUrl
+                "images": [
+                    "image1": imgUrl
+                ]
             ]
             
             if locationField.text != nil {
@@ -269,8 +273,6 @@ class HaveDoneEditVC: UIViewController, UIImagePickerControllerDelegate, UINavig
         
         let str = string.stringByReplacingOccurrencesOfString(":", withString: "")
         let value = String(str.characters.dropLast(7))
-        
-        print(value)
         
         return value
     }
