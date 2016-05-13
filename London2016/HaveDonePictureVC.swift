@@ -10,10 +10,9 @@ import UIKit
 import Alamofire
 import Firebase
 
-class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     var detailedPicture: Picture!
     var request: Request?
@@ -22,19 +21,13 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
     var newImg: UIImage?
     var alertController = UIAlertController()
     var imageDictCount: Int!
-    var imageDict = [String: String]()
+    var imageDict = [UIImage]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        scrollView.autoresizingMask = UIViewAutoresizing.FlexibleWidth
-        scrollView.autoresizingMask = UIViewAutoresizing.FlexibleHeight
         
-        scrollView.contentOffset = CGPoint(x: 1000, y: 450)
-        scrollView.delegate = self
-        
-        scrollViewDidZoom(scrollView)
-        setupGestureRecognizer()
+        collectionView.dataSource = self
+        collectionView.delegate = self
         
         imagePicker = UIImagePickerController()
         imagePicker.delegate = self
@@ -42,79 +35,38 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
         loadPictureData { (succes) -> Void in
             if succes {
                 self.loadItem()
+                self.collectionView.reloadData()
             }
         }
         
         imageDictCount = detailedPicture.pictureDict?.count
         
-    }
-    
-    func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
-        return imageView
-    }
-    
-    override func viewWillLayoutSubviews() {
-        setZoomScale()
-    }
-    
-    func scrollViewDidZoom(scrollView: UIScrollView) {
-        let imageViewSize = imageView.frame.size
-        let scrollViewSize = scrollView.bounds.size
         
-        let verticalPadding = imageViewSize.height < scrollViewSize.height ? (scrollViewSize.height - imageViewSize.height) / 2 : 0
-        let horizontalPadding = imageViewSize.width < scrollViewSize.width ? (scrollViewSize.width - imageViewSize.width) / 2 : 0
-        
-        scrollView.contentInset = UIEdgeInsets(top: verticalPadding, left: horizontalPadding, bottom: verticalPadding, right: horizontalPadding)
-    }
-    
-    func setZoomScale() {
-        let imageViewSize = imageView.bounds.size
-        let scrollViewSize = scrollView.bounds.size
-        let widthScale = scrollViewSize.width / imageViewSize.width
-        let heightScale = scrollViewSize.height / imageViewSize.height
-        
-        scrollView.minimumZoomScale = min(widthScale, heightScale)
-        scrollView.zoomScale = 1.0
-    }
-    
-    func setupGestureRecognizer() {
-        let doubleTap = UITapGestureRecognizer(target: self, action: #selector(HaveDonePictureVC.handleDoubleTap(_:)))
-        doubleTap.numberOfTapsRequired = 2
-        scrollView.addGestureRecognizer(doubleTap)
-    }
-    
-    func handleDoubleTap(recognizer: UITapGestureRecognizer) {
-        if (scrollView.zoomScale > scrollView.minimumZoomScale) {
-            scrollView.setZoomScale(scrollView.minimumZoomScale, animated: true)
-        } else {
-            scrollView.setZoomScale(scrollView.maximumZoomScale, animated: true)
-        }
     }
     
     func loadItem() {
         
-        for (index, item) in imageDict.enumerate() {
-            request = Alamofire.request(.GET, item.1).validate(contentType: ["image/*"]).response(completionHandler: { request, response, data, error in
-                if error == nil {
-                    
-                    let img = UIImage(data: data!)!
-                    let imgView = UIImageView(image: img)
-                    
-                    self.scrollView.addSubview(imgView)
-                    
-                    imgView.frame = CGRectMake((320 * CGFloat(index)), 0, 320, 504)
-                    
-//                    self.firstImg = UIImage(data: data!)!
-//                    self.imageView.image = self.firstImg
-//                    self.imageView.clipsToBounds = true
-//                    HaveDoneVC.imageCache.setObject(self.firstImg, forKey: self.detailedPicture.pictureImage)
-                }
-                
-                self.scrollView.contentSize = CGSizeMake(320 * CGFloat(self.imageDictCount), 504)
-            })
-
-        }
-            
+//        for (index, item) in imageDict.enumerate() {
+//            request = Alamofire.request(.GET, item.1).validate(contentType: ["image/*"]).response(completionHandler: { request, response, data, error in
+//                if error == nil {
+//                    
+//                    let img = UIImage(data: data!)!
+//                    let imgView = UIImageView(image: img)
+//                    
+//                    self.scrollView.addSubview(imgView)
+//                    
+//                    imgView.frame = CGRectMake((320 * CGFloat(index)), 0, 320, 504)
+//                    
+////                    self.firstImg = UIImage(data: data!)!
+////                    self.imageView.image = self.firstImg
+////                    self.imageView.clipsToBounds = true
+////                    HaveDoneVC.imageCache.setObject(self.firstImg, forKey: self.detailedPicture.pictureImage)
+//                }
+//                
+//                self.scrollView.contentSize = CGSizeMake(320 * CGFloat(self.imageDictCount), 504)
+//            })
+//
+//        }
     }
     
     @IBAction func addPhotoTapped() {
@@ -126,7 +78,13 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
         let dataImage = UIImageJPEGRepresentation((info[UIImagePickerControllerOriginalImage] as? UIImage)!, 1.0)!
         
         newImg = UIImage(data: dataImage)!
-        imageView.image = newImg
+        
+        let imageView = UIImageView(image: newImg)
+        imageView.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)
+        imageView.backgroundColor = UIColor.blackColor()
+        imageView.contentMode = .ScaleAspectFit
+        
+        view.addSubview(imageView)
         
         dismissViewControllerAnimated(true, completion: nil)
         
@@ -140,7 +98,7 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
     }
     
     func uploadImage() {
-        if let img = imageView.image {
+        if let img = newImg {
             let urlStr = "https://post.imageshack.us/upload_api.php"
             let url = NSURL(string: urlStr)!
             let imgData = UIImageJPEGRepresentation(img, 0.6)!
@@ -190,7 +148,9 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
     func postToFirebase(imgUrl: String) {
         let postRef = DataService.ds.REF_PICTURES.childByAppendingPath("\(self.detailedPicture.pictureKey)/images")
         
-        let imagePlace = imageDictCount + 1
+        
+        let imagePlace = imageDict.count + 1
+        print(imagePlace)
         postRef.updateChildValues(["image\(imagePlace)": imgUrl])
         
         imageDictCount = imageDictCount + 1
@@ -210,9 +170,16 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
                         
                         if key == self.detailedPicture.pictureKey {
                             
-                            if let images = postDict["images"] as? Dictionary<String, AnyObject> {
+                            if let images = postDict["images"] as? Dictionary<String,String> {
                                 for img in images {
-                                    self.imageDict.updateValue(img.1 as! String, forKey: img.0)
+                                    if let url = NSURL(string: "\(img.1)") {
+                                        if let data = NSData(contentsOfURL: url) {
+                                            if let img = UIImage(data: data) {
+                                                self.imageDict.append(img)
+                                            }
+                                        }
+                                        
+                                    }
                                 }
                             } 
                         }
@@ -223,5 +190,29 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
             
         })
     }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return imageDict.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        let post = imageDict[indexPath.row]
+        
+        if let cell = collectionView.dequeueReusableCellWithReuseIdentifier("CustomCell", forIndexPath: indexPath) as? CustomCollectionViewCell {
+            
+            var img = UIImage(named: "placeholder")
+            
+            img = post
+            
+            cell.configureCell(img)
+            
+            return cell
+        } else {
+            return UICollectionViewCell()
+        }
+    }
+    
+    
     
 }
