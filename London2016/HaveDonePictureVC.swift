@@ -45,7 +45,7 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
         
         imageView.image = img
         
-        var imageDictCount = detailedPicture.pictureDict?.count
+        imageDictCount = detailedPicture.pictureDict?.count
         
     }
     
@@ -157,6 +157,8 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
         postRef.updateChildValues(["image\(imagePlace)": imgUrl])
         
         imageDictCount = imageDictCount + 1
+        
+        
         
     }
     
