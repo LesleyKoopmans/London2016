@@ -15,14 +15,14 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var imageView: UIImageView!
     
+    @IBOutlet weak var imageViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageViewTopContstraint: NSLayoutConstraint!
+    @IBOutlet weak var imageViewTrailingConstraint: NSLayoutConstraint!
+    
     var detailedPicture: Picture!
     var request: Request?
     var imagePicker: UIImagePickerController!
-    var firstImg: UIImage!
-    var newImg: UIImage?
-    var alertController = UIAlertController()
-    var imageDictCount: Int!
-    var imageDict = [String: String]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,19 +33,17 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
         scrollView.contentOffset = CGPoint(x: 1000, y: 450)
         scrollView.delegate = self
         
+        imagePicker = UIImagePickerController()
+        
         scrollViewDidZoom(scrollView)
         setupGestureRecognizer()
         
-        imagePicker = UIImagePickerController()
-        imagePicker.delegate = self
+        var img = UIImage(named: "placeholder")
+        img = HaveDoneVC.imageCache.objectForKey(detailedPicture.pictureImage) as? UIImage
         
-        loadPictureData { (succes) -> Void in
-            if succes {
-                self.loadItem()
-            }
-        }
+        imageView.image = img
         
-        imageDictCount = detailedPicture.pictureDict?.count
+        var imageIndex = detailedPicture.pictureDict?.count
         
     }
     
@@ -91,59 +89,19 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
         }
     }
     
-    func loadItem() {
-        
-        for (index, item) in imageDict.enumerate() {
-            request = Alamofire.request(.GET, item.1).validate(contentType: ["image/*"]).response(completionHandler: { request, response, data, error in
-                if error == nil {
-                    
-                    let img = UIImage(data: data!)!
-                    let imgView = UIImageView(image: img)
-                    
-                    self.scrollView.addSubview(imgView)
-                    
-                    imgView.frame = CGRectMake((320 * CGFloat(index)), 0, 320, 504)
-                    
-//                    self.firstImg = UIImage(data: data!)!
-//                    self.imageView.image = self.firstImg
-//                    self.imageView.clipsToBounds = true
-//                    HaveDoneVC.imageCache.setObject(self.firstImg, forKey: self.detailedPicture.pictureImage)
-                }
-                
-                self.scrollView.contentSize = CGSizeMake(320 * CGFloat(self.imageDictCount), 504)
-            })
-
-        }
-            
-    }
-    
-    @IBAction func addPhotoTapped() {
+    func addPictureTapped() {
         presentViewController(imagePicker, animated: true, completion: nil)
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        let img = info[UIImagePickerControllerOriginalImage] as? UIImage
+        imageView.image = img
         imagePicker.sourceType = .PhotoLibrary
-        let dataImage = UIImageJPEGRepresentation((info[UIImagePickerControllerOriginalImage] as? UIImage)!, 1.0)!
         
-        newImg = UIImage(data: dataImage)!
-        imageView.image = newImg
-        
-        dismissViewControllerAnimated(true, completion: nil)
-        
-        alertController = UIAlertController(title: "Toevoegen?", message: "Wilt u deze foto toevoegen aan de huidige foto?", preferredStyle: .Alert)
-        let cancelAction = UIAlertAction(title: "Annuleer", style: .Cancel, handler: nil)
-        let okAction = UIAlertAction(title: "Toevoegen", style: .Default, handler: {(alert: UIAlertAction!) in self.uploadImage()})
-        alertController.addAction(cancelAction)
-        alertController.addAction(okAction)
-        presentViewController(alertController, animated: true, completion: nil)
-        
-    }
-    
-    func uploadImage() {
         if let img = imageView.image {
             let urlStr = "https://post.imageshack.us/upload_api.php"
             let url = NSURL(string: urlStr)!
-            let imgData = UIImageJPEGRepresentation(img, 0.6)!
+            let imgData = UIImageJPEGRepresentation(img, 0.2)!
             let keyData = "389CIJPV7ede49f95a967a77e48a44c0aa697929".dataUsingEncoding(NSUTF8StringEncoding)!
             let keyJSON = "json".dataUsingEncoding(NSUTF8StringEncoding)!
             
@@ -166,62 +124,33 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
                                     self.postToFirebase(imgLink)
                                 }
                             }
-                            
-                        } else {
-                            self.alertController = UIAlertController(title: "Mislukt", message: "Die verdomde error die ik nog niet kan verhelpen!", preferredStyle: .Alert)
-                            let cancelAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
-                            self.alertController.addAction(cancelAction)
-                            dispatch_async(dispatch_get_main_queue(), {
-                                self.presentViewController(self.alertController, animated: true, completion: nil)
-                            })
                         }
                     })
                     
                 case .Failure(let error):
                     print(error)
+                    let alertController = UIAlertController(title: "Mislukt", message: "Die verdomde error die ik nog niet kan verhelpen!", preferredStyle: .Alert)
+                    let cancelAction = UIAlertAction(title: "OK", style: .Default, handler: nil)
+                    alertController.addAction(cancelAction)
+                    self.presentViewController(alertController, animated: true, completion: nil)
                 }
             }
             
         } else {
             print("Upload zonder foto")
         }
+        
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func postToFirebase(imgUrl: String) {
-        let postRef = DataService.ds.REF_PICTURES.childByAppendingPath("\(self.detailedPicture.pictureKey)/images")
+    func postToFirebase(image: String) {
+        let postRef = DataService.ds.REF_PICTURES.childByAppendingPath(detailedPicture.pictureKey)
+        var post: Dictionary<String, AnyObject> = [
+            "images": [
+                "image": image
+            ]
+        ]
         
-        let imagePlace = imageDictCount + 1
-        postRef.updateChildValues(["image\(imagePlace)": imgUrl])
-        
-        imageDictCount = imageDictCount + 1
-        
-    }
-    
-    func loadPictureData(completionHandler: (succes: Bool) -> Void) {
-        
-        DataService.ds.REF_PICTURES.queryOrderedByChild("date").observeEventType(.Value, withBlock: { snapshot in
-            completionHandler(succes: false)
-            if let snapshots = snapshot.children.allObjects as? [FDataSnapshot] {
-                
-                for snap in snapshots {
-                    
-                    if let postDict = snap.value as? Dictionary<String, AnyObject> {
-                        let key = snap.key
-                        
-                        if key == self.detailedPicture.pictureKey {
-                            
-                            if let images = postDict["images"] as? Dictionary<String, AnyObject> {
-                                for img in images {
-                                    self.imageDict.updateValue(img.1 as! String, forKey: img.0)
-                                }
-                            } 
-                        }
-                    }
-                }
-                completionHandler(succes: true)
-            }
-            
-        })
     }
     
 }

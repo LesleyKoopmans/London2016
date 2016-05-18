@@ -607,6 +607,7 @@
 				67CE03F41CC12CDB0074CF51 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

@@ -12,6 +12,7 @@ import Alamofire
 
 class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
     
+    @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var postImage: UIImageView!
     @IBOutlet weak var descriptionLbl: UILabel!
     @IBOutlet weak var mapView: MKMapView!
@@ -20,6 +21,7 @@ class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
     var post: Picture!
     var request: Request?
     var coordinate: CLLocationCoordinate2D?
+    var pictures = [UIImage]()
     
     let regionRadius: CLLocationDistance = 1000
     
@@ -28,12 +30,19 @@ class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
         
         mapView.delegate = self
         
-        loadPost()
+        loadPost { (succes) in
+            if succes {
+                print(self.pictures.count)
+                self.addImagesToScrollview()
+            }
+        }
+        
         createMap()
     }
     
     @IBAction func pictureTapped(sender: UITapGestureRecognizer) {
         performSegueWithIdentifier("HaveDonePictureVC", sender: post)
+        print("tapped")
     }
     
     @IBAction func editBtnTapped() {
@@ -58,25 +67,41 @@ class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
         }
     }
     
-    func loadPost() {
+    func loadPost(completionHandler: (succes: Bool) -> Void) {
         self.navigationItem.title = "\(post.pictureName)"
         descriptionLbl.text = post.pictureDescription
         
-        var img: UIImage?
-        
-        if img != nil {
-            self.postImage.image = img
-        } else {
-            request = Alamofire.request(.GET, post.pictureImage).validate(contentType: ["image/*"]).response(completionHandler: { request, response, data, error in
+        if let dict = post.pictureDict {
+            for img in dict {
+                let url = NSURL(string: "\(img.0)")
+                
+                Alamofire.request(.GET, url!).validate(contentType: ["image/*"]).response(completionHandler: { request, response, data, error in
                     if error == nil {
                         let img = UIImage(data: data!)!
-                        self.postImage.image = img
-                        self.postImage.clipsToBounds = true
-                        HaveDoneVC.imageCache.setObject(img, forKey: self.post.pictureImage)
+                        self.pictures.append(img)
+                        completionHandler(succes: false)
                     }
-            })
+                    completionHandler(succes: true)
+                })
+            }
         }
-        img = HaveDoneVC.imageCache.objectForKey(post.pictureImage) as? UIImage
+
+        
+//        var img: UIImage?
+//        
+//        if img != nil {
+//            self.postImage.image = img
+//        } else {
+//            request = Alamofire.request(.GET, post.pictureImage).validate(contentType: ["image/*"]).response(completionHandler: { request, response, data, error in
+//                    if error == nil {
+//                        let img = UIImage(data: data!)!
+//                        self.postImage.image = img
+//                        self.postImage.clipsToBounds = true
+//                        HaveDoneVC.imageCache.setObject(img, forKey: self.post.pictureImage)
+//                    }
+//            })
+//        }
+//        img = HaveDoneVC.imageCache.objectForKey(post.pictureImage) as? UIImage
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -115,5 +140,19 @@ class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
             mapView.hidden = true
             lineView.hidden = true
         }
+    }
+    
+    func addImagesToScrollview() {
+        let index = pictures.count
+        
+        for (index, image) in pictures.enumerate() {
+            let imgView = UIImageView(image: image)
+            imgView.contentMode = .ScaleAspectFit
+            scrollView.addSubview(imgView)
+            
+            imgView.frame = CGRectMake(-320 + (320 * CGFloat(index + 1)), 0, 320, scrollView.frame.size.height)
+        }
+        
+        scrollView.contentSize = CGSizeMake(320 * CGFloat(index), scrollView.frame.size.height)
     }
 }
