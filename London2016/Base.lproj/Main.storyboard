@@ -524,7 +524,7 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" maximumZoomScale="3" translatesAutoresizingMaskIntoConstraints="NO" id="2zP-zl-c4Z">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="D297C40A-D849-487E-8BAE-0481C39D420E" translatesAutoresizingMaskIntoConstraints="NO" id="r02-ez-czG">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="F4C2089C-90D7-4428-90B6-335221A16F4A" translatesAutoresizingMaskIntoConstraints="NO" id="r02-ez-czG">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="504" id="he3-MU-zsg"/>
@@ -555,6 +555,9 @@
                     <navigationItem key="navigationItem" id="LXC-og-GlZ">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="rRn-iD-ELA">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="addPictureTapped" destination="hO9-1f-69r" id="lYa-D3-Qbu"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
@@ -1103,7 +1106,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="D297C40A-D849-487E-8BAE-0481C39D420E" width="700" height="482">
+        <image name="F4C2089C-90D7-4428-90B6-335221A16F4A" width="700" height="482">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

@@ -148,6 +148,11 @@ class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
         for (index, image) in pictures.enumerate() {
             let imgView = UIImageView(image: image)
             imgView.contentMode = .ScaleAspectFit
+            
+            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(HaveDoneDetailVC.pictureTapped(_:)))
+            imgView.userInteractionEnabled = true
+            imgView.addGestureRecognizer(tapGestureRecognizer)
+            
             scrollView.addSubview(imgView)
             
             imgView.frame = CGRectMake(-320 + (320 * CGFloat(index + 1)), 0, 320, scrollView.frame.size.height)

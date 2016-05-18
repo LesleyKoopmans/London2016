@@ -23,6 +23,7 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
     var detailedPicture: Picture!
     var request: Request?
     var imagePicker: UIImagePickerController!
+    var imageDictCount: Int!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +35,7 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
         scrollView.delegate = self
         
         imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
         
         scrollViewDidZoom(scrollView)
         setupGestureRecognizer()
@@ -43,7 +45,7 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
         
         imageView.image = img
         
-        var imageIndex = detailedPicture.pictureDict?.count
+        var imageDictCount = detailedPicture.pictureDict?.count
         
     }
     
@@ -89,13 +91,14 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
         }
     }
     
-    func addPictureTapped() {
+    @IBAction func addPictureTapped() {
         presentViewController(imagePicker, animated: true, completion: nil)
     }
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        let img = info[UIImagePickerControllerOriginalImage] as? UIImage
-        imageView.image = img
+        let dataImage = UIImageJPEGRepresentation((info[UIImagePickerControllerOriginalImage] as? UIImage)!, 1.0)!
+        let img = UIImage(data: dataImage)!
+        
         imagePicker.sourceType = .PhotoLibrary
         
         if let img = imageView.image {
@@ -141,15 +144,19 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
         }
         
         dismissViewControllerAnimated(true, completion: nil)
+        
+        imageView.image = img
     }
     
-    func postToFirebase(image: String) {
-        let postRef = DataService.ds.REF_PICTURES.childByAppendingPath(detailedPicture.pictureKey)
-        var post: Dictionary<String, AnyObject> = [
-            "images": [
-                "image": image
-            ]
-        ]
+    func postToFirebase(imgUrl: String) {
+        let postRef = DataService.ds.REF_PICTURES.childByAppendingPath("\(self.detailedPicture.pictureKey)/images")
+        
+        print(imageDictCount)
+        
+        let imagePlace = imageDictCount + 1
+        postRef.updateChildValues(["image\(imagePlace)": imgUrl])
+        
+        imageDictCount = imageDictCount + 1
         
     }
     
