@@ -10,39 +10,54 @@ import UIKit
 import MapKit
 import Alamofire
 
-class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
+class HaveDoneDetailVC: UIViewController, UIPageViewControllerDataSource {
     
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var postImage: UIImageView!
-    @IBOutlet weak var descriptionLbl: UILabel!
-    @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var lineView: UIView!
-    
+    //VARIABLES AND LETS
     var post: Picture!
     var request: Request?
-    var coordinate: CLLocationCoordinate2D?
-    var pictures = [UIImage]()
+    var pictures = [String:UIImage]()
     
-    let regionRadius: CLLocationDistance = 1000
+    var pageViewController: UIPageViewController!
+    var pageTitles: NSArray!
+    var pageImages: [UIImage]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        mapView.delegate = self
+        pageTitles = [String]()
+        pageImages = [UIImage]()
         
         loadPost { (succes) in
             if succes {
-                print(self.pictures.count)
-                self.addImagesToScrollview()
+                self.pageViewController = self.storyboard?.instantiateViewControllerWithIdentifier("PageViewController") as! UIPageViewController
+                
+                let startVC = self.viewControllerAtIndex(0) as ContentViewController
+                let viewControllers = NSArray(object: startVC)
+                
+                self.pageViewController.setViewControllers(viewControllers as? [UIViewController], direction: .Forward, animated: true, completion: nil)
+                self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+                self.addChildViewController(self.pageViewController)
+                self.view.addSubview(self.pageViewController.view)
+                self.pageViewController.didMoveToParentViewController(self)
             }
         }
         
-        createMap()
+        
+        
+        self.pageViewController.dataSource = self
+        
+//        let startVC = viewControllerAtIndex(0) as ContentViewController
+//        let viewControllers = NSArray(object: startVC)
+//        
+//        self.pageViewController.setViewControllers(viewControllers as? [UIViewController], direction: .Forward, animated: true, completion: nil)
+//        self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)
+//        self.addChildViewController(self.pageViewController)
+//        self.view.addSubview(self.pageViewController.view)
+//        self.pageViewController.didMoveToParentViewController(self)
     }
     
     @IBAction func pictureTapped(sender: UITapGestureRecognizer) {
         performSegueWithIdentifier("HaveDonePictureVC", sender: post)
-        print("tapped")
     }
     
     @IBAction func editBtnTapped() {
@@ -69,95 +84,66 @@ class HaveDoneDetailVC: UIViewController, MKMapViewDelegate {
     
     func loadPost(completionHandler: (succes: Bool) -> Void) {
         self.navigationItem.title = "\(post.pictureName)"
-        descriptionLbl.text = post.pictureDescription
         
         if let dict = post.pictureDict {
             for img in dict {
+                completionHandler(succes: false)
                 let url = NSURL(string: "\(img.0)")
-                
                 Alamofire.request(.GET, url!).validate(contentType: ["image/*"]).response(completionHandler: { request, response, data, error in
                     if error == nil {
-                        let img = UIImage(data: data!)!
-                        self.pictures.append(img)
-                        completionHandler(succes: false)
+                        let value = UIImage(data: data!)!
+                        let key = img.1
+                        self.pictures["\(key)"] = value
+                        self.pageImages.append(value)
                     }
-                    completionHandler(succes: true)
                 })
+                
             }
+            
         }
-
-        
-//        var img: UIImage?
-//        
-//        if img != nil {
-//            self.postImage.image = img
-//        } else {
-//            request = Alamofire.request(.GET, post.pictureImage).validate(contentType: ["image/*"]).response(completionHandler: { request, response, data, error in
-//                    if error == nil {
-//                        let img = UIImage(data: data!)!
-//                        self.postImage.image = img
-//                        self.postImage.clipsToBounds = true
-//                        HaveDoneVC.imageCache.setObject(img, forKey: self.post.pictureImage)
-//                    }
-//            })
-//        }
-//        img = HaveDoneVC.imageCache.objectForKey(post.pictureImage) as? UIImage
+        completionHandler(succes: true)
     }
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
-        
-        if annotation.isKindOfClass(Annotations) {
-            let annoView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "Default")
-            annoView.pinTintColor = primaryColor
-            annoView.animatesDrop = true
-            
-            return annoView
+    func viewControllerAtIndex(index: Int) -> ContentViewController {
+        if ((self.pageTitles.count == 0) || (index >= self.pageTitles.count)) {
+            return ContentViewController()
         }
-        return nil
+        
+        let vc: ContentViewController = self.storyboard?.instantiateViewControllerWithIdentifier("ContentViewController") as! ContentViewController
+        vc.imageFile = self.pageImages[index]
+        vc.titleText = self.pageTitles[index] as? String
+        vc.pageIndex = index
+        
+        return vc
+        
     }
     
-    func createMap() {
+    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+        let vc = viewController as! ContentViewController
+        var index = vc.pageIndex as Int
         
-        if let lat = post.pictureLatitude, lon = post.pictureLongitude {
-            mapView.hidden = false
-            lineView.hidden = false
-            
-            coordinate = CLLocationCoordinate2D(latitude: lat, longitude: lon)
-            
-            let span = MKCoordinateSpanMake(0.01, 0.01)
-            let region = MKCoordinateRegion(center: coordinate!, span: span)
-            
-            mapView.setRegion(region, animated: true)
-            
-            let location = post.pictureLocation
-            
-            let place = Annotations(coordinate: coordinate!, title: location)
-            
-            mapView.addAnnotation(place)
-            mapView.selectAnnotation(place, animated: true)
-            
-        } else {
-            mapView.hidden = true
-            lineView.hidden = true
+        if (index == 0) || (index == NSNotFound) {
+            return nil
         }
+        index = index - 1
+        return self.viewControllerAtIndex(index)
+        
     }
     
-    func addImagesToScrollview() {
-        let index = pictures.count
+    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+        let vc = viewController as! ContentViewController
+        var index = vc.pageIndex as Int
         
-        for (index, image) in pictures.enumerate() {
-            let imgView = UIImageView(image: image)
-            imgView.contentMode = .ScaleAspectFit
-            
-            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(HaveDoneDetailVC.pictureTapped(_:)))
-            imgView.userInteractionEnabled = true
-            imgView.addGestureRecognizer(tapGestureRecognizer)
-            
-            scrollView.addSubview(imgView)
-            
-            imgView.frame = CGRectMake(-320 + (320 * CGFloat(index + 1)), 0, 320, scrollView.frame.size.height)
+        if (index == NSNotFound) {
+            return nil
         }
         
-        scrollView.contentSize = CGSizeMake(320 * CGFloat(index), scrollView.frame.size.height)
+        index = index + 1
+        
+        if (index == self.pageTitles.count) {
+            return nil
+        }
+        
+        return self.viewControllerAtIndex(index)
     }
 }

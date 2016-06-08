@@ -27,6 +27,7 @@
 		67238F8E1CB2B55500C36898 /* HaveDoneEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67238F8D1CB2B55500C36898 /* HaveDoneEditVC.swift */; };
 		67238F901CB2DEBB00C36898 /* CONSTANTS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67238F8F1CB2DEBB00C36898 /* CONSTANTS.swift */; };
 		67238F921CB3FD3D00C36898 /* HaveDonePictureVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67238F911CB3FD3D00C36898 /* HaveDonePictureVC.swift */; };
+		6745B4FF1D08C0AC008C9BB0 /* ContentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6745B4FE1D08C0AC008C9BB0 /* ContentViewController.swift */; };
 		67CE03E01CBE8C530074CF51 /* Annotations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67CE03DF1CBE8C4F0074CF51 /* Annotations.swift */; };
 		67CE03E71CC12CD90074CF51 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67CE03E61CC12CD90074CF51 /* NotificationCenter.framework */; };
 		67CE03EA1CC12CDB0074CF51 /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67CE03E91CC12CDB0074CF51 /* TodayViewController.swift */; };
@@ -83,6 +84,7 @@
 		67238F8D1CB2B55500C36898 /* HaveDoneEditVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HaveDoneEditVC.swift; sourceTree = "<group>"; };
 		67238F8F1CB2DEBB00C36898 /* CONSTANTS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CONSTANTS.swift; sourceTree = "<group>"; };
 		67238F911CB3FD3D00C36898 /* HaveDonePictureVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HaveDonePictureVC.swift; sourceTree = "<group>"; };
+		6745B4FE1D08C0AC008C9BB0 /* ContentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentViewController.swift; sourceTree = "<group>"; };
 		67CE03DF1CBE8C4F0074CF51 /* Annotations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Annotations.swift; sourceTree = "<group>"; };
 		67CE03E51CC12CD80074CF51 /* LondonToday.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LondonToday.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		67CE03E61CC12CD90074CF51 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
@@ -161,6 +163,7 @@
 				67238F8B1CB2AE9100C36898 /* HaveDoneDetailVC.swift */,
 				67238F8D1CB2B55500C36898 /* HaveDoneEditVC.swift */,
 				67238F911CB3FD3D00C36898 /* HaveDonePictureVC.swift */,
+				6745B4FE1D08C0AC008C9BB0 /* ContentViewController.swift */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 				67238F8E1CB2B55500C36898 /* HaveDoneEditVC.swift in Sources */,
 				67238F8C1CB2AE9100C36898 /* HaveDoneDetailVC.swift in Sources */,
 				67CE03E01CBE8C530074CF51 /* Annotations.swift in Sources */,
+				6745B4FF1D08C0AC008C9BB0 /* ContentViewController.swift in Sources */,
 				67238F901CB2DEBB00C36898 /* CONSTANTS.swift in Sources */,
 				67232BA51C973B2B0006540A /* MainVC.swift in Sources */,
 				67232BC31C98AF950006540A /* Activity.swift in Sources */,

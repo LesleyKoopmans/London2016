@@ -32,6 +32,7 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
         scrollView.autoresizingMask = UIViewAutoresizing.FlexibleHeight
         
         scrollView.contentOffset = CGPoint(x: 1000, y: 450)
+        scrollView.contentSize = imageView.bounds.size
         scrollView.delegate = self
         
         imagePicker = UIImagePickerController()
@@ -101,6 +102,8 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
         
         imagePicker.sourceType = .PhotoLibrary
         
+        imageView.image = img
+        
         if let img = imageView.image {
             let urlStr = "https://post.imageshack.us/upload_api.php"
             let url = NSURL(string: urlStr)!
@@ -145,20 +148,17 @@ class HaveDonePictureVC: UIViewController, UIScrollViewDelegate, UIImagePickerCo
         
         dismissViewControllerAnimated(true, completion: nil)
         
-        imageView.image = img
     }
     
     func postToFirebase(imgUrl: String) {
         let postRef = DataService.ds.REF_PICTURES.childByAppendingPath("\(self.detailedPicture.pictureKey)/images")
-        
-        print(imageDictCount)
-        
+                
         let imagePlace = imageDictCount + 1
         postRef.updateChildValues(["image\(imagePlace)": imgUrl])
         
         imageDictCount = imageDictCount + 1
         
-        
+        self.navigationController?.popViewControllerAnimated(true)
         
     }
     

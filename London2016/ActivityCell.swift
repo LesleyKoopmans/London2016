@@ -26,14 +26,14 @@ class ActivityCell: UICollectionViewCell {
             self.thumbImg.clipsToBounds = true
         } else {
             
-            request = Alamofire.request(.GET, activity.activityImage!).validate(contentType: ["image/*"]).response(completionHandler: { request, response, data, error in
-                if error == nil {
-                    let img = UIImage(data: data!)!
-                    self.thumbImg.image = img
-                    self.thumbImg.clipsToBounds = true
-                    ToDoVC.imageCache.setObject(img, forKey: self.activity.activityImage!)
-                }
-            })
+//            request = Alamofire.request(.GET, activity.activityImage!).validate(contentType: ["image/*"]).response(completionHandler: { request, response, data, error in
+//                if error == nil {
+//                    let img = UIImage(data: data!)!
+//                    self.thumbImg.image = img
+//                    self.thumbImg.clipsToBounds = true
+//                    ToDoVC.imageCache.setObject(img, forKey: self.activity.activityImage!)
+//                }
+//            })
             
         }
     }
